@@ -1,2 +1,3 @@
 # no need for build directory
 build
+/.nb-gradle/
