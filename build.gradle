@@ -12,6 +12,7 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'application'
 apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
 
 logging.captureStandardOutput LogLevel.QUIET
 
@@ -71,3 +72,6 @@ test {
     systemProperties System.getProperties()
 }
 
+checkstyle {
+    sourceSets = [project.sourceSets.main]
+}
