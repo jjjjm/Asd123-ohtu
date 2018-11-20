@@ -1,4 +1,4 @@
-# Asd123-ohtu  [![Build Status](https://travis-ci.com/jjjjm/Asd123-ohtu.svg?branch=master)](https://travis-ci.com/jjjjm/Asd123-ohtu)  (codecov-badge sekä linkki herokuun)
+# Asd123-ohtu  [![Build Status](https://travis-ci.com/jjjjm/Asd123-ohtu.svg?branch=master)](https://travis-ci.com/jjjjm/Asd123-ohtu)  [![codecov](https://codecov.io/gh/jjjjm/Asd123-ohtu/branch/master/graph/badge.svg)](https://codecov.io/gh/jjjjm/Asd123-ohtu) (linkki herokuun)
 
 
 Projektin lyhyt kuvaus...
