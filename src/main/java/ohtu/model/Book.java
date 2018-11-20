@@ -21,6 +21,10 @@ public class Book {
         this.isRead = isRead;
         this.dayOfRead = dayOfRead;
     }
+    
+    //tyhjä konstruktori, jotta lomakkeen saa nettisivuilla näkyviin. myöhemmin ehkä turha
+    public Book() {    
+    }
 
     public int getId() {
         return id;

@@ -6,6 +6,7 @@ import ohtu.dao.BookDaoPG;
 import ohtu.model.Book;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ public class BookController {
         return "books";
     }
 
+    //tämä ehkä turha?
     @RequestMapping(method = RequestMethod.POST)
     public String add(@RequestBody Book book) {
         // add new book to database ...
@@ -37,8 +39,12 @@ public class BookController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newBookForm() {
+    public String newBookForm(Book book) { //tähän kohtaan piti parametriks laittaa Book book, että sai formin nettisivuilla näkyviin
         return "new_book";
     }
-
+    
+    @RequestMapping(value ="/new", method = RequestMethod.POST)
+    public String addBook(@RequestBody Book book) {
+        return "redirect:/books.html";
+    }
 }
