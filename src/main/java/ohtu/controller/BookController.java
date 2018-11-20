@@ -24,7 +24,7 @@ public class BookController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         List<Book> books = bDao.list();
-        //model.addAttribute("books", books);
+        model.addAttribute("books", books);
         return "books";
     }
 

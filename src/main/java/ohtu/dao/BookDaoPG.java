@@ -1,8 +1,14 @@
-
 package ohtu.dao;
 
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import ohtu.model.Book;
+import org.h2.tools.RunScript;
 
 /**
  * BookDao implementation for postgresql database.
@@ -16,46 +22,77 @@ public class BookDaoPG implements BookDao {
 
     @Override
     public List<Book> list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // get connection to database
+        Connection connection = getDatabaseConnection();
+        if (connection == null) {
+            return new ArrayList<>();
+        }
+        // get list of books
+        List<Book> books = fetchAllBooks(connection);
+        try {
+            connection.close();
+        } catch (Exception e) {
+        }
+        return books;
     }
 
-    //    private List<Book> fetchAllBooks() {
-//        try {
-//            // Open connection to a database -- do not alter this code
-//            String databaseAddress = "jdbc:postgresql:archive";
-//
-//            Connection connection = DriverManager.getConnection(databaseAddress, "postgres", "admin"); // salasana ja käyttäjä ympäristömuuttujiin?
-//
-//            try {
-//                // If database has not yet been created, insert content
-//                RunScript.execute(connection, new FileReader("sql/database-schema.sql"));
-//                RunScript.execute(connection, new FileReader("sql/database-import.sql"));
-//            } catch (Throwable t) {
-//            }
-//
-//            // Add the code that reads the books from the database 
-//            // and prints them here
-//            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Book");
-//
-//            List<Book> books = new ArrayList<>();
-//
-//            while (resultSet.next()) {
-//                int id = resultSet.getInt("id");
-//                String name = resultSet.getString("name");
-//                books.add(new Book(id, name));
-//            }
-//
-//            // close the connection
-//            resultSet.close();
-//            connection.close();
-//
-//            return books;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            // failed --> return empty list
-//            return new ArrayList<>();
-//        }
-//    }
-    
+    private Connection getDatabaseConnection() {
+        try {
+            // Open connection to a database -- do not alter this code
+            String databaseAddress = "jdbc:postgresql:archive";
+
+            Connection connection = DriverManager.getConnection(databaseAddress, "postgres", "admin"); // salasana ja käyttäjä ympäristömuuttujiin?
+
+            try {
+                // If database has not yet been created, insert content --> maybe this should be done somewhere else
+                RunScript.execute(connection, new FileReader("sql/database-schema.sql"));
+                RunScript.execute(connection, new FileReader("sql/database-import.sql"));
+            } catch (Throwable t) {
+            }
+            return connection;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<Book> fetchAllBooks(Connection connection) {
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM BOOK");
+            List<Book> books = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Book book = createBookFromResultSetRow(resultSet);
+                if(book != null) {
+                    books.add(book);
+                }
+            }
+
+            resultSet.close();  // close resultset
+            return books;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    private Book createBookFromResultSetRow(ResultSet resultSet) {
+        try {
+            int id = resultSet.getInt("ID");
+            String writer = resultSet.getString("WRITER");
+            String title = resultSet.getString("TITLE");
+            String isbn = resultSet.getString("ISBN");
+            boolean isRead = resultSet.getBoolean("IS_READ");
+            Date date = null;
+            if(isRead) {
+                date = new Date(resultSet.getTimestamp("DATE_OF_READ").getTime());
+            }
+            Book book = new Book(id, title, writer, isbn, isRead, date);
+            return book;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
