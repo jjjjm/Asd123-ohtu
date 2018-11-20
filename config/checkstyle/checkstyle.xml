@@ -5,7 +5,7 @@
     <module name="TreeWalker">
         <module name="MethodLength">
             <property name="tokens" value="METHOD_DEF"/>
-            <property name="max" value="20"/>
+            <property name="max" value="25"/>
         </module>
         <module name="NestedIfDepth"/>
         <module name="NestedForDepth"/>
