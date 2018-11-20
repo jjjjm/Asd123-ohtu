@@ -1,4 +1,4 @@
-# Asd123-ohtu  [![Build Status](https://travis-ci.com/jjjjm/Asd123-ohtu.svg?branch=master)](https://travis-ci.com/jjjjm/Asd123-ohtu)  [![codecov](https://codecov.io/gh/jjjjm/Asd123-ohtu/branch/master/graph/badge.svg)](https://codecov.io/gh/jjjjm/Asd123-ohtu) (linkki herokuun)
+# Asd123-ohtu  [![Build Status](https://travis-ci.com/jjjjm/Asd123-ohtu.svg?branch=master)](https://travis-ci.com/jjjjm/Asd123-ohtu)  [![codecov](https://codecov.io/gh/jjjjm/Asd123-ohtu/branch/master/graph/badge.svg)](https://codecov.io/gh/jjjjm/Asd123-ohtu) [Heroku](https://asd123-ohtu.herokuapp.com/)
 
 
 Projektin lyhyt kuvaus...
