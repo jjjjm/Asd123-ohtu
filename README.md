@@ -11,7 +11,16 @@ Linkit dokumentaatioon...
 devaamista varten:
 gradle run --> sovellus käynnistyy osoitteeseen localhost:8080
 
-## Vaatimukset
+## Definition of done
+Käyttäjä voi lisätä lukuvinkin 
+ -Käyttäjä pystyy syöttämään tarvittavat tiedot.
+ -Käyttäjän syöte tallentuu tietokantaan.
+
+Käyttäjä näkee listatut lukuvinkit
+ -Käyttäjä pystyy navigoimaan listaussivulle.
+ -Tietokantaan tallennetut lukuvinkit näkyvät 
+käyttäjälle.
+
 
 ## Muuta
 ryhmä-id: 5bed4c347aa7f8001ecd6d36  
