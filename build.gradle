@@ -30,7 +30,7 @@ repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/snapshot' }
 }
-    
+
 mainClassName='ohtu.Main'
 
 dependencies {
@@ -38,16 +38,16 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
-    
+
     compile("com.h2database:h2")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.heroku.sdk:heroku-jdbc:0.1.1")
     compile("org.postgresql:postgresql:9.4.1212.jre7")
-    
+
     compile("org.springframework.boot:spring-boot-devtools")
-	
+
     compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
-    
+
     compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-htmlunit-driver',version: seleniumVersion
@@ -64,7 +64,7 @@ dependencies {
     testCompile "info.cukes:cucumber-java:" + cucumberVersion
     testCompile "info.cukes:cucumber-junit:" + cucumberVersion
     testCompile "info.cukes:cucumber-spring:" + cucumberVersion
-    testCompile "junit:junit:" + junitVersion 
+    testCompile "junit:junit:" + junitVersion
 }
 
 test {
@@ -74,4 +74,11 @@ test {
 
 checkstyle {
     sourceSets = [project.sourceSets.main]
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
 }
