@@ -39,10 +39,15 @@ public class BookDaoPG implements BookDao {
     private Connection getDatabaseConnection() {
         try {
             // Open connection to a database -- do not alter this code
-            String databaseAddress = "jdbc:postgresql:archive";
-
+            
+            //Try to get db address from env. variable if possible
+            String databaseAddress = System.getenv("JDBC_DATABASE_URL");
+            if (databaseAddress != null && databaseAddress.length() > 0) {
+                Connection connection = DriverManager.getConnection(databaseAddress);
+            } else {
+                databaseAddress = "jdbc:postgresql:archive";
+            }
             Connection connection = DriverManager.getConnection(databaseAddress, "postgres", "admin"); // salasana ja käyttäjä ympäristömuuttujiin?
-
             try {
                 // If database has not yet been created, insert content --> maybe this should be done somewhere else
                 RunScript.execute(connection, new FileReader("sql/database-schema.sql"));
@@ -63,7 +68,7 @@ public class BookDaoPG implements BookDao {
 
             while (resultSet.next()) {
                 Book book = createBookFromResultSetRow(resultSet);
-                if(book != null) {
+                if (book != null) {
                     books.add(book);
                 }
             }
@@ -84,7 +89,7 @@ public class BookDaoPG implements BookDao {
             String isbn = resultSet.getString("ISBN");
             boolean isRead = resultSet.getBoolean("IS_READ");
             Date date = null;
-            if(isRead) {
+            if (isRead) {
                 date = new Date(resultSet.getTimestamp("DATE_OF_READ").getTime());
             }
             Book book = new Book(id, title, writer, isbn, isRead, date);
