@@ -1,5 +1,10 @@
 /* Define database schema here */
-CREATE TABLE Book (
-    id SERIAL,
-    name varchar(200) not null
+CREATE TABLE BOOK (
+    ID SERIAL,
+    TITLE VARCHAR(200) NOT NULL,
+    WRITER VARCHAR(200) NOT NULL,
+    ISBN VARCHAR(50),
+    IS_READ BOOLEAN,
+    DATE_OF_READ TIMESTAMP,
+    PRIMARY KEY (ID)
 );
