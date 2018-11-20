@@ -1,0 +1,5 @@
+INSERT INTO Agent (id, name) VALUES ('1', 'Kirja1');
+INSERT INTO Agent (id, name) VALUES ('2', 'Kirja2');
+INSERT INTO Agent (id, name) VALUES ('3', 'Kirja3');
+INSERT INTO Agent (id, name) VALUES ('4','Sasha Nein');
+

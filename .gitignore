@@ -1,3 +1,6 @@
 # no need for build directory
 build
 /.nb-gradle/
+
+# database files from root should not be included
+*.db
