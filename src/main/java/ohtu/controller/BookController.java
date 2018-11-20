@@ -1,15 +1,9 @@
 package ohtu.controller;
 
-import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import ohtu.model.Book;
-import org.h2.tools.RunScript;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,6 +16,19 @@ public class BookController {
 //        List<Book> books = fetchAllBooks();
 //        model.addAttribute("books", books);
         return "books";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Book add(@RequestBody Book book) {
+        // add new book to database ...
+        return book;
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newBookForm() {
+//        List<Book> books = fetchAllBooks();
+//        model.addAttribute("books", books);
+        return "new_book";
     }
 
 //    private List<Book> fetchAllBooks() {
@@ -62,5 +69,4 @@ public class BookController {
 //            return new ArrayList<>();
 //        }
 //    }
-
 }
