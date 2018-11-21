@@ -39,10 +39,10 @@ public class Stepdefs {
         Thread.sleep(1000);        
     }
 
-    @When("^a link is clicked$")
-    public void a_link_is_clicked() throws Throwable {
+    @When("^the \"([^\"]*)\" link is clicked$")
+    public void a_link_is_clicked(String arg1) throws Throwable {
         Thread.sleep(1000);  
-        clickLinkWithText("linkki" );
+        clickLinkWithText(arg1);
         Thread.sleep(1000);  
     }    
    
@@ -51,6 +51,7 @@ public class Stepdefs {
         assertTrue(driver.findElement(By.tagName("body"))
                 .getText().contains(arg1));
     }
+    
 
     private void clickLinkWithText(String text) {
         int trials = 0;
