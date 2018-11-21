@@ -9,7 +9,7 @@
     <body>
         <div>Create new book</div>
         
-        <form action="#" th:action="@{books/new}" th:object="${book}" method="post">
+        <form action="#" th:action="@{/books/new}" th:object="${book}" method="post">
                 <p>title: <input type="text" th:field="${book.title}" /></p>
                	<p>author: <input type="text" th:field="${book.writer}" /></p>
                 <p>isbn: <input type="text" th:field="${book.isbn}" /></p>        

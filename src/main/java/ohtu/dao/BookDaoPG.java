@@ -1,5 +1,6 @@
 package ohtu.dao;
 
+import java.sql.Timestamp;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +18,16 @@ public class BookDaoPG implements BookDao {
 
     @Override
     public void add(Book book) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+        // get connection
+        Connection connection = getDatabaseConnection();
+        if(connection == null) {
+            return;
+        }
+        addBookToDatabase(connection, book);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -100,4 +110,15 @@ public class BookDaoPG implements BookDao {
         return null;
     }
 
+    private void addBookToDatabase(Connection connection, Book book) {
+        try {
+            
+            String statement = "INSERT INTO BOOK (WRITER, TITLE, ISBN) VALUES ('"
+                     + book.getWriter() + "', '" + book.getTitle() + "', '" + book.getIsbn() + "')";
+            
+            connection.createStatement().executeUpdate(statement);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
