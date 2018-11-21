@@ -18,8 +18,7 @@ Käyttäjä voi lisätä lukuvinkin
 
 Käyttäjä näkee listatut lukuvinkit  
  -Käyttäjä pystyy navigoimaan listaussivulle.  
- -Tietokantaan tallennetut lukuvinkit näkyvät   
-käyttäjälle.
+ -Tietokantaan tallennetut lukuvinkit näkyvät käyttäjälle.
 
 
 ## Muuta
