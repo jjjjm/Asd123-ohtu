@@ -19,12 +19,12 @@ public class BookDaoPG implements BookDao {
     @Override
     public void add(Book book) {
         try {
-        // get connection
-        Connection connection = getDatabaseConnection();
-        if(connection == null) {
-            return;
-        }
-        addBookToDatabase(connection, book);
+            // get connection
+            Connection connection = getDatabaseConnection();
+            if (connection == null) {
+                return;
+            }
+            addBookToDatabase(connection, book);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,7 +49,7 @@ public class BookDaoPG implements BookDao {
     private Connection getDatabaseConnection() {
         try {
             // Open connection to a database -- do not alter this code
-            
+
             //Try to get db address from env. variable if possible
             String databaseAddress = System.getenv("JDBC_DATABASE_URL");
             if (databaseAddress != null && databaseAddress.length() > 0) {
@@ -112,10 +112,10 @@ public class BookDaoPG implements BookDao {
 
     private void addBookToDatabase(Connection connection, Book book) {
         try {
-            
+
             String statement = "INSERT INTO BOOK (WRITER, TITLE, ISBN) VALUES ('"
-                     + book.getWriter() + "', '" + book.getTitle() + "', '" + book.getIsbn() + "')";
-            
+                    + book.getWriter() + "', '" + book.getTitle() + "', '" + book.getIsbn() + "')";
+
             connection.createStatement().executeUpdate(statement);
         } catch (Exception e) {
             e.printStackTrace();
