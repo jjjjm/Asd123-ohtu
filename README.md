@@ -12,13 +12,13 @@ devaamista varten:
 gradle run --> sovellus käynnistyy osoitteeseen localhost:8080
 
 ## Definition of done
-Käyttäjä voi lisätä lukuvinkin 
- -Käyttäjä pystyy syöttämään tarvittavat tiedot.
- -Käyttäjän syöte tallentuu tietokantaan.
+Käyttäjä voi lisätä lukuvinkin  
+ -Käyttäjä pystyy syöttämään tarvittavat tiedot.  
+ -Käyttäjän syöte tallentuu tietokantaan.  
 
-Käyttäjä näkee listatut lukuvinkit
- -Käyttäjä pystyy navigoimaan listaussivulle.
- -Tietokantaan tallennetut lukuvinkit näkyvät 
+Käyttäjä näkee listatut lukuvinkit  
+ -Käyttäjä pystyy navigoimaan listaussivulle.  
+ -Tietokantaan tallennetut lukuvinkit näkyvät   
 käyttäjälle.
 
 
