@@ -16,6 +16,7 @@ public class BookTest {
 
     private Book book;
     private Date today;
+    private Date changedDate;
 
     @Before
     public void setUp() {
@@ -25,6 +26,7 @@ public class BookTest {
         String isbn = "123456789";
         boolean isRead = true;
         today = new Date();;
+        changedDate = new Date(2000, 10, 1);
         book = new Book(id, title, writer, isbn, isRead, today);
     }
 
@@ -39,8 +41,20 @@ public class BookTest {
     }
     
     @Test
+    public void setIdWorks() {
+        book.setId(20);
+        assertEquals(20, book.getId());
+    }
+    
+    @Test
     public void getWriterWorks() {
         assertEquals("TestiKirjoittaja", book.getWriter());
+    }
+    
+    @Test
+    public void settWriterWorks() {
+        book.setWriter("muuttuu");
+        assertEquals("muuttuu", book.getWriter());
     }
     
     @Test
@@ -49,8 +63,20 @@ public class BookTest {
     }
     
     @Test
+    public void setTitleWorks() {
+        book.setTitle("muutettunimi");
+        assertEquals("muutettunimi", book.getTitle());
+    }
+    
+    @Test
     public void getISBNWorks() {
         assertEquals("123456789", book.getISBN());
+    }
+    
+    @Test
+    public void setISBNWorks() {
+        book.setISBN("987654321");
+        assertEquals("987654321", book.getISBN());
     }
     
     @Test
@@ -59,7 +85,19 @@ public class BookTest {
     }
     
     @Test
+    public void setIsReadWorks() {
+        book.setIsRead(false);
+        assertEquals(false, book.isIsRead());
+    }
+    
+    @Test
     public void getDateOfReadWorks() {
         assertEquals(today, book.getDayOfRead());
+    }
+    
+    @Test
+    public void setDateOfReadWorks() {
+        book.setDayOfRead(changedDate);
+        assertEquals(changedDate, book.getDayOfRead());
     }
 }
