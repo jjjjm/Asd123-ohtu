@@ -21,8 +21,8 @@ Sovelluksen jatkuva integrointi Travisissa löytyy [täältä](https://travis-ci
 ## Codecov
 Sovelluksen testikattavuutta voi tarkastella [täältä](https://codecov.io/gh/jjjjm/Asd123-ohtu).
 
-## Buildaus
-devaamista varten: Siirry komentorivillä siihen hakemistoon, minne haluat ohjelman latautuvan ja lataa se gitistä komennolla
+## Asennus ja käynnistys
+Siirry komentorivillä siihen hakemistoon, minne haluat ohjelman latautuvan ja lataa se gitistä komennolla
 ```
 git clone https://github.com/jjjjm/Asd123-ohtu.git
 ```
