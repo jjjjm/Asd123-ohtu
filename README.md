@@ -1,8 +1,12 @@
-# Asd123-ohtu  [![Build Status](https://travis-ci.com/jjjjm/Asd123-ohtu.svg?branch=master)](https://travis-ci.com/jjjjm/Asd123-ohtu)  [![codecov](https://codecov.io/gh/jjjjm/Asd123-ohtu/branch/master/graph/badge.svg)](https://codecov.io/gh/jjjjm/Asd123-ohtu) [Heroku](https://asd123-ohtu.herokuapp.com/)
+# Asd123-ohtu  [![Build Status](https://travis-ci.com/jjjjm/Asd123-ohtu.svg?branch=master)](https://travis-ci.com/jjjjm/Asd123-ohtu)  [![codecov](https://codecov.io/gh/jjjjm/Asd123-ohtu/branch/master/graph/badge.svg)](https://codecov.io/gh/jjjjm/Asd123-ohtu) [Lukuvinkkikirjasto](https://asd123-ohtu.herokuapp.com/)
 
+Lukuvinkkikirjasto-sovelluksessa käyttäjä voi merkitä muistiin kirjoja, videoita, blogi-kirjoituksia yms., joita haluaa lukea/katsoa myöhemmin. Sovellus tehdään ryhmätyönä Helsingin yliopiston kurssilla Ohjelmistotuotanto 2018. Tarkemman tehtävänannon voi lukea [täältä](https://github.com/mluukkai/ohjelmistotuotanto2018/wiki/miniprojekti-speksi).
 
-Projektin lyhyt kuvaus...
+Tehtävän pääpainona on harjoitella [Scrumia](https://www.scrum.org/resources/what-is-scrum) ohjelmistotuotannon hallintamenetelmänä.
 
+* Kieli: Java
+* Buildaus ja konfiguraatio: [Gradle](https://gradle.org/) & [Spring Boot](https://spring.io/)
+* Tietokanta: PostgreSQL
 
 ## Dokumentaatio
 [Product backlog](https://docs.google.com/spreadsheets/d/19UW1VPX9_UCwK7XIggMv1iKhb0BMqjDI0IBkyVOpkDY/edit#gid=0)
@@ -23,7 +27,7 @@ devaamista varten: Siirry komentorivillä siihen hakemistoon, minne haluat ohjel
 git clone https://github.com/jjjjm/Asd123-ohtu.git
 ```
 Siirry projektikansioon komennolla ```cd Asd123-ohtu```. Käynnistä ohjelma komennolla ```gradle run```, tai jos se ei toimi, niin ```./gradlew run```.
-Ohjelma käynnistyy. Sovellus käynnistyy osoitteeseen localhost:8080 (mene verkkoselaimellasi kyseiseen osoitteeseen).
+Ohjelma käynnistyy. Sovellus käynnistyy osoitteeseen http://localhost:8080 (mene verkkoselaimellasi kyseiseen osoitteeseen).
 
 ## Definition of done
 Ominaisuus toimii sovelluksessa ja sitä on testattu.
