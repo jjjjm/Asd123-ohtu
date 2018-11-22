@@ -27,7 +27,7 @@ devaamista varten: Siirry komentorivillä siihen hakemistoon, minne haluat ohjel
 git clone https://github.com/jjjjm/Asd123-ohtu.git
 ```
 Siirry projektikansioon komennolla ```cd Asd123-ohtu```. Käynnistä ohjelma komennolla ```gradle run```, tai jos se ei toimi, niin ```./gradlew run```.
-Ohjelma käynnistyy. Sovellus käynnistyy osoitteeseen http://localhost:8080 (mene verkkoselaimellasi kyseiseen osoitteeseen).
+Ohjelma käynnistyy. Sovellus käynnistyy osoitteeseen http://localhost:8080.
 
 ## Definition of done
 Ominaisuus toimii sovelluksessa ja sitä on testattu.
