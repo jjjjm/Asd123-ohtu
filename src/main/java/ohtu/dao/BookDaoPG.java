@@ -57,7 +57,7 @@ public class BookDaoPG implements BookDao {
             } else {
                 databaseAddress = "jdbc:postgresql:archive";
             }
-            Connection connection = DriverManager.getConnection(databaseAddress, "postgres", "admin"); // salasana ja käyttäjä ympäristömuuttujiin?
+            Connection connection = DriverManager.getConnection(databaseAddress, "yysmjircbarfyc", "cw3AqC5dvyDnSo73HJJb4mcgKs"); // salasana ja käyttäjä ympäristömuuttujiin?
             try {
                 // If database has not yet been created, insert content --> maybe this should be done somewhere else
                 RunScript.execute(connection, new FileReader("sql/database-schema.sql"));
