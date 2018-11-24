@@ -24,6 +24,7 @@ project.ext {
 
 run {
     standardInput = System.in
+    environment "SPRING_PROFILES_ACTIVE", "production"
 }
 
 repositories {
@@ -70,6 +71,7 @@ dependencies {
 test {
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
+    environment "SPRING_PROFILES_ACTIVE", "development"
 }
 
 checkstyle {
@@ -85,8 +87,8 @@ jacocoTestReport {
         afterEvaluate {
             classDirectories = files(classDirectories.files.collect {
                     fileTree(dir: it,
-                        exclude: ['ohtu/model/Book.java'])
-                    // Removed for now since class only has getters and setters.
+                        exclude: ['**/Main**', 'ohtu/teststubs/**']
+                    )
                 })
         }
     }
