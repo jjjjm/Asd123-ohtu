@@ -25,6 +25,7 @@ public class BookDaoPG implements BookDao {
                 return;
             }
             addBookToDatabase(connection, book);
+            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,12 +53,10 @@ public class BookDaoPG implements BookDao {
 
             //Try to get db address from env. variable if possible
             String databaseAddress = System.getenv("JDBC_DATABASE_URL");
-            if (databaseAddress != null && databaseAddress.length() > 0) {
-                Connection connection = DriverManager.getConnection(databaseAddress);
-            } else {
-                databaseAddress = "jdbc:postgresql:archive";
+            if (databaseAddress == null || databaseAddress.length() == 0) {
+                databaseAddress = "jdbc:postgresql:" + System.getenv("DB_NAME");
             }
-            Connection connection = DriverManager.getConnection(databaseAddress, "yysmjircbarfyc", "cw3AqC5dvyDnSo73HJJb4mcgKs"); // salasana ja käyttäjä ympäristömuuttujiin?
+            Connection connection = DriverManager.getConnection(databaseAddress, System.getenv("DB_USER"), System.getenv("DB_PASSWORD")); 
             try {
                 // If database has not yet been created, insert content --> maybe this should be done somewhere else
                 RunScript.execute(connection, new FileReader("sql/database-schema.sql"));

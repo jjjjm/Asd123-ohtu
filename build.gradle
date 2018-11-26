@@ -24,6 +24,9 @@ project.ext {
 
 run {
     standardInput = System.in
+    environment "DB_NAME", "archive"
+    environment "DB_USER", "postgres"
+    environment "DB_PASSWORD", "admin"
 }
 
 repositories {
@@ -70,6 +73,10 @@ dependencies {
 test {
     testLogging.showStandardStreams = true
     systemProperties System.getProperties()
+    environment "DB_NAME", "archive"
+    environment "DB_USER", "postgres"
+    environment "DB_PASSWORD", "admin"
+    // travis käyttää defaulttina tyhjää passwordia --> database.yml.travis
 }
 
 checkstyle {
