@@ -27,6 +27,7 @@ run {
     environment "DB_NAME", "archive"
     environment "DB_USER", "postgres"
     environment "DB_PASSWORD", "admin"
+    environment "SPRING_PROFILES_ACTIVE", "production"
 }
 
 repositories {
@@ -76,7 +77,8 @@ test {
     environment "DB_NAME", "archive"
     environment "DB_USER", "postgres"
     environment "DB_PASSWORD", "admin"
-    // travis käyttää defaulttina tyhjää passwordia --> database.yml.travis
+    environment "SPRING_PROFILES_ACTIVE", "development"
+
 }
 
 checkstyle {
@@ -92,8 +94,8 @@ jacocoTestReport {
         afterEvaluate {
             classDirectories = files(classDirectories.files.collect {
                     fileTree(dir: it,
-                        exclude: ['ohtu/model/Book.java'])
-                    // Removed for now since class only has getters and setters.
+                        exclude: ['**/Main**', 'ohtu/teststubs/**']
+                    )
                 })
         }
     }
