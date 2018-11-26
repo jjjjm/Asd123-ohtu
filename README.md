@@ -22,6 +22,34 @@ Sovelluksen jatkuva integrointi Travisissa löytyy [täältä](https://travis-ci
 Sovelluksen testikattavuutta voi tarkastella [täältä](https://codecov.io/gh/jjjjm/Asd123-ohtu).
 
 ## Asennus ja käynnistys
+Avaa komentorivi ja avaa PostreSQL instanssi komennolla
+```
+sudo -u postgres psql
+```
+Vaihda käyttäjän postgres salasanaksi 'admin' syöttämällä komento
+```
+\password postgres
+```
+Luo tämän jälkeen tietokanta nimeltä 'archive' syöttämällä komento
+```
+sudo -u postgres createdb archive
+```
+Nyt voit poistua PostgreSQL instanssista näppäinyhdistelmällä 
+```
+CTRL+Z
+```
+Tarkista pyöriikö koneella postgresql taustaprosessi syöttämällä komento
+```
+sudo service postgresql status
+```
+Jos prosessi ei ole käynnissä, käynnistä se komennolla
+```
+sudo service postgresql start
+```
+Jos prosessi on jo käynnissä, käynnistä se uudelleen komennolla
+```
+sudo service postgresql restart
+```
 Siirry komentorivillä siihen hakemistoon, minne haluat ohjelman latautuvan ja lataa se gitistä komennolla
 ```
 git clone https://github.com/jjjjm/Asd123-ohtu.git
