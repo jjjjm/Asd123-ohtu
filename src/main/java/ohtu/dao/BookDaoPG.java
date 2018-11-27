@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class BookDaoPG implements BookDao {
         }
         return books;
     }
-    
+
     @Override
     public Book getBook(int id) {
         Connection connection = getDatabaseConnection();
@@ -61,6 +62,19 @@ public class BookDaoPG implements BookDao {
         return book;
     }
 
+    @Override
+    public void update(Book book) {
+        try {
+            Connection connection = getDatabaseConnection();
+            if (connection == null) {
+                return;
+            }
+            this.updateBook(connection, book);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Connection getDatabaseConnection() {
         try {
             // Open connection to a database -- do not alter this code
@@ -70,7 +84,7 @@ public class BookDaoPG implements BookDao {
             if (databaseAddress == null || databaseAddress.length() == 0) {
                 databaseAddress = "jdbc:postgresql:" + System.getenv("DB_NAME");
             }
-            Connection connection = DriverManager.getConnection(databaseAddress, System.getenv("DB_USER"), System.getenv("DB_PASSWORD")); 
+            Connection connection = DriverManager.getConnection(databaseAddress, System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
             try {
                 // If database has not yet been created, insert content --> maybe this should be done somewhere else
                 RunScript.execute(connection, new FileReader("sql/database-schema.sql"));
@@ -125,9 +139,9 @@ public class BookDaoPG implements BookDao {
     }
 
     private void addBookToDatabase(Connection connection, Book book) {
-        
+
         try {
-            String statement = "INSERT INTO BOOK (WRITER, TITLE, ISBN, DESCRIPTION) VALUES ('" 
+            String statement = "INSERT INTO BOOK (WRITER, TITLE, ISBN, DESCRIPTION) VALUES ('"
                     + book.getWriter() + "', '" + book.getTitle() + "', '" + book.getIsbn() + "', '" + book.getDescription() + "')";
 
             connection.createStatement().executeUpdate(statement);
@@ -135,13 +149,13 @@ public class BookDaoPG implements BookDao {
             e.printStackTrace();
         }
     }
-    
-    private Book getBookById(Connection connection, Integer id) { 
+
+    private Book getBookById(Connection connection, Integer id) {
         try {
-            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM BOOK WHERE ID='" + id +"'"); 
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM BOOK WHERE ID='" + id + "'");
             Book book = null;
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 book = createBookFromResultSetRow(resultSet);
             }
             resultSet.close();
@@ -150,5 +164,17 @@ public class BookDaoPG implements BookDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void updateBook(Connection connection, Book book) {
+        try {
+            PreparedStatement prdstm = connection.prepareStatement("UPDATE BOOK SET "
+                    + "WRITER = '" + book.getWriter() + "', TITLE = '" + book.getTitle() + "', ISBN = '" + book.getIsbn() + "', DESCRIPTION = '" + book.getDescription() + "' WHERE ID = '" + book.getId() + "';");
+            prdstm.execute();
+
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

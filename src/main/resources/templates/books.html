@@ -27,6 +27,8 @@
                 <p></p>
                 Kuvaus: <span th:text="${book.description}">hh</span>
                 <p></p>
+                <a th:href="@{'/books/' + ${book.id}}">Lisätietoja / muokkaus</a>
+                <p></p>
             </td>
             </li>
         </ul>

@@ -34,5 +34,14 @@ public class BookDaoForTests implements BookDao {
         }
         return null;
     }
+
+    @Override
+    public void update(Book book) {
+        for(Book b : this.books){
+            if(b.getId() == book.getId()){
+                //todo
+            }
+        }
+    }
     
 }

@@ -19,7 +19,7 @@ public class BookController {
 
     // interface to database
     private BookDao bDao;
-    
+
     // controller with dependency injection
     @Autowired
     public BookController(BookDao bookDao) {
@@ -43,7 +43,7 @@ public class BookController {
         bDao.add(book);
         return "redirect:/books";
     }
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String showBook(Model model, @PathVariable Integer id) {
         Book book = bDao.getBook(id);
@@ -52,5 +52,11 @@ public class BookController {
         }
         model.addAttribute("book", book);
         return "showbook";
+    }
+
+    @PostMapping(value = "/{id}")
+    public String updateBook(@ModelAttribute Book book, @PathVariable Integer id) {
+        bDao.update(book);
+        return "redirect:/books";
     }
 }

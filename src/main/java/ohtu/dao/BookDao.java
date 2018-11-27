@@ -12,4 +12,6 @@ public interface BookDao {
     
     public Book getBook(int id); // search book by id
     
+    public void update(Book book); //updates book values in database
+    
 }
