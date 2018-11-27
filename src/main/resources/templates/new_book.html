@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Uusi kirjavinkki</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
@@ -20,12 +20,12 @@
         <div>Create new book</div>
         
         <form action="#" th:action="@{/books/new}" th:object="${book}" method="post">
-                <p>title: <input type="text" th:field="${book.title}" /></p>
-               	<p>author: <input type="text" th:field="${book.writer}" /></p>
-                <p>isbn: <input type="text" th:field="${book.isbn}" /></p>
-                <p>description:</p> <textarea th:field="${book.description}"></textarea>
+                <p>title: <input th:id="title" type="text" th:field="${book.title}" /></p>
+               	<p>author: <input th:id="author" type="text" th:field="${book.writer}" /></p>
+                <p>isbn: <input th:id="isbn" type="text" th:field="${book.isbn}" /></p>
+                <p>description:</p> <textarea th:id="description" th:field="${book.description}"></textarea>
                 
-                <p><input type="submit" value="Submit" /></p> 
+                <p><input th:id="submit" type="submit" value="Submit" /></p> 
        	</form>
 
     </body>
