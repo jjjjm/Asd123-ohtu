@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kirja:</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <p></p>
+        <td>
+            <a href="/"> etusivu </a>
+        </td>
+        &nbsp; &nbsp;
+        <td>
+            <a href="/books/new"> uusi kirja </a>
+        </td> 
+        
+        <ul>
+            <li th:each="book : ${books}">
+                <p><span th:text="${book.title}">hello world</span></p>
+                <td>
+                    <p>Kirjoittaja: <span th:text="${book.writer}">shdf</span></p>
+                    <p>Kuvaus: <span th:text="${book.description}">uwu</span></p>
+                </td>
+            </li>
+        </ul>
+
+    </body>
+</html>
