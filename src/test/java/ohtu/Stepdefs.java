@@ -43,7 +43,17 @@ public class Stepdefs {
     @Given("^book \"([^\"]*)\" exists in database$")
     public void book_exists_in_database(String bookname) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-
+        driver.get("http://localhost:" + 8080 + "/books/new");
+        Thread.sleep(1000);
+        WebElement element = driver.findElement(By.id("title"));
+        element.sendKeys(bookname);
+        element = driver.findElement(By.id("author"));
+        element.sendKeys("Anonymous");
+        element = driver.findElement(By.id("isbn"));
+        element.sendKeys("123456789");
+        element = driver.findElement(By.id("submit"));
+        element.click();
+        Thread.sleep(1000);
     }
 
     @Then("^\"([^\"]*)\" is shown$")
@@ -94,7 +104,31 @@ public class Stepdefs {
     public void requesting_individual_book_page_with_id(String id) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         driver.get("http://localhost:" + 8080 + "/books/" + id);
+        Thread.sleep(1000);
     }
+
+    @Then("^the user should be at page \"([^\"]*)\"$")
+    public void the_user_should_be_at_page(String page) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals("http://localhost:8080/" + page, driver.getCurrentUrl());
+    }
+    
+    @Given("^book \"([^\"]*)\" exist in database$")
+    public void book_exist_in_database(String bookname) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.get("http://localhost:" + 8080 + "/" + "books/new");
+        Thread.sleep(1000);
+        WebElement element = driver.findElement(By.id("title"));
+        element.sendKeys(bookname);
+        element = driver.findElement(By.id("author"));
+        element.sendKeys("Anonymous");
+        element = driver.findElement(By.id("isbn"));
+        element.sendKeys("123456789");
+        element = driver.findElement(By.id("submit"));
+        element.click();
+        Thread.sleep(1000);
+    }
+
 
     private void clickLinkWithText(String text) {
         int trials = 0;

@@ -16,6 +16,7 @@ public class BookDaoForTests implements BookDao {
     
     @Override
     public void add(Book book) {
+        book.setId(books.size() + 1);
         books.add(book);
     }
 

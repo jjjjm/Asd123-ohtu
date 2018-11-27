@@ -20,3 +20,8 @@ Scenario: User is redirected to main page when trying to view book with id that 
   Given the user is at the main page
   When requesting individual book page with id "-1"
   Then the page should list book "Kirjat"
+
+Scenario: User can view individual book page
+  Given book "Testikirja" exist in database
+  When requesting individual book page with id "1"
+  Then the user should be at page "books/1"
