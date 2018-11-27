@@ -10,4 +10,6 @@ public interface BookDao {
     
     public List<Book> list();   // retun list of books in database
     
+    public List<Book> getBook(int id); 
+    
 }

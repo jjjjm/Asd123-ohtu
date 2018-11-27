@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,15 @@ public class BookController {
     @PostMapping(value = "/new")
     public String addBook(@ModelAttribute Book book) {
         bDao.add(book);
-        return "redirect:/books.html";
+        return "redirect:/books";
+    }
+    
+    //shows one book
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    public String showBook(Model model, @PathVariable Integer id) {
+
+        List<Book> books = bDao.getBook(id);   
+        model.addAttribute("books", books);
+        return "showbook";
     }
 }

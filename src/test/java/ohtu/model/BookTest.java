@@ -21,10 +21,11 @@ public class BookTest {
         String writer = "TestiKirjoittaja";
         String title = "TestiNimi";
         String isbn = "123456789";
+        String description = "nice";
         boolean isRead = true;
         today = new Date();;
         changedDate = new Date(2000, 10, 1);
-        book = new Book(id, title, writer, isbn, isRead, today);
+        book = new Book(id, title, writer, isbn, description, isRead, today);
     }
 
     @Test

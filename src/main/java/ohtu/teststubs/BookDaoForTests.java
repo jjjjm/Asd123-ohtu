@@ -24,4 +24,9 @@ public class BookDaoForTests implements BookDao {
         return books;
     }
     
+    @Override
+    public List<Book> getBook(int id){
+        return books;
+    }
+    
 }

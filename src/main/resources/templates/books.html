@@ -6,6 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
+        <p></p>
+        <td>
+            <a href="/"> etusivu </a>
+        </td>
+        &nbsp; &nbsp;
+        <td>
+            <a href="/books/new"> uusi kirja </a>
+        </td> 
         
         <h2>Books in database</h2>
         
@@ -13,17 +21,15 @@
         <ul>
             <li th:each="book : ${books}">
                 <span th:text="${book.title}">hello world</span>
+                <p></p>
+            <td>
+                Tekijä: <span th:text="${book.writer}">kk</span>
+                <p></p>
+                Kuvaus: <span th:text="${book.description}">hh</span>
+                <p></p>
+            </td>
             </li>
         </ul>
-        
-        <p></p>
-        <td><p></p>
-            <a href="/"> etusivu </a>
-        </td> 
-        <p></p>
-        <td><p></p>
-            <a href="/books/new"> uusi kirja </a>
-        </td> 
-
+  
     </body>
 </html>

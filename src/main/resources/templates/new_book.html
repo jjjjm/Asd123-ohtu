@@ -2,26 +2,31 @@
 
 <html>
     <head>
-        <title>Uusi kirjavinkki</title>
+        <title>TODO supply a title</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
+        
+        <td>
+            <a href="/"> etusivu </a>
+        </td>
+        &nbsp; &nbsp;
+        <td>
+            <a href="/books/new"> uusi kirja </a>
+        </td>
+        <p></p>
+        
         <div>Create new book</div>
         
         <form action="#" th:action="@{/books/new}" th:object="${book}" method="post">
-                <p>title: <input th:id="title" type="text" th:field="${book.title}" /></p>
-               	<p>author: <input th:id="author" type="text" th:field="${book.writer}" /></p>
-                <p>isbn: <input th:id="isbn" type="text" th:field="${book.isbn}" /></p>        
-                <p><input th:id="submit" type="submit" value="Submit" /></p> 
+                <p>title: <input type="text" th:field="${book.title}" /></p>
+               	<p>author: <input type="text" th:field="${book.writer}" /></p>
+                <p>isbn: <input type="text" th:field="${book.isbn}" /></p>
+                <p>description:</p> <textarea th:field="${book.description}"></textarea>
+                
+                <p><input type="submit" value="Submit" /></p> 
        	</form>
-        
-        <td><p></p>
-            <a href="/"> etusivu </a>
-        </td> 
-        <td><p></p>
-            <a href="/books"> kaikki kirjat </a>
-        </td> 
 
     </body>
 </html>

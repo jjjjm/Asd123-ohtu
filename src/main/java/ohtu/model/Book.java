@@ -10,14 +10,16 @@ public class Book {
     private String title;
     private String writer;
     private String isbn;
+    private String description;
     private boolean isRead;
     private Date dayOfRead;
 
-    public Book(int id, String title, String writer, String isbn, boolean isRead, Date dayOfRead) {
+    public Book(int id, String title, String writer, String isbn, String description, boolean isRead, Date dayOfRead) {
         this.id = id;
         this.title = title;
         this.writer = writer;
         this.isbn = isbn;
+        this.description = description;
         this.isRead = isRead;
         this.dayOfRead = dayOfRead;
     }
@@ -64,6 +66,14 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public boolean isIsRead() {

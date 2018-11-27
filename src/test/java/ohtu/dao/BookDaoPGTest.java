@@ -54,10 +54,11 @@ public class BookDaoPGTest {
         String writer = "HaamuKirjoittaja";
         String title = "Tietokannan salat";
         String isbn = "345765123";
+        String description = "bad";
         boolean isRead = false;
         today = new Date();
         changedDate = new Date(2000, 10, 1);
-        book = new Book(id, title, writer, isbn, isRead, today);
+        book = new Book(id, title, writer, isbn, description, isRead, today);
         bdaopg.add(book);
         List<Book> books = bdaopg.list();
         assertEquals("Tietokannan salat", books.get(books.size()-1).getTitle());

@@ -46,6 +46,20 @@ public class BookDaoPG implements BookDao {
         }
         return books;
     }
+    
+    @Override
+    public List<Book> getBook(int id) {
+        Connection connection = getDatabaseConnection();
+        if (connection == null) {
+            return new ArrayList<>();
+        }
+        List<Book> books = getBookById(connection, id);
+        try {
+            connection.close();
+        } catch (Exception e) {
+        }
+        return books;
+    }
 
     private Connection getDatabaseConnection() {
         try {
@@ -96,12 +110,13 @@ public class BookDaoPG implements BookDao {
             String writer = resultSet.getString("WRITER");
             String title = resultSet.getString("TITLE");
             String isbn = resultSet.getString("ISBN");
+            String description = resultSet.getString("DESCRIPTION");
             boolean isRead = resultSet.getBoolean("IS_READ");
             Date date = null;
             if (isRead) {
                 date = new Date(resultSet.getTimestamp("DATE_OF_READ").getTime());
             }
-            Book book = new Book(id, title, writer, isbn, isRead, date);
+            Book book = new Book(id, title, writer, isbn, description, isRead, date);
             return book;
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,14 +125,34 @@ public class BookDaoPG implements BookDao {
     }
 
     private void addBookToDatabase(Connection connection, Book book) {
+        
         try {
-
-            String statement = "INSERT INTO BOOK (WRITER, TITLE, ISBN) VALUES ('"
-                    + book.getWriter() + "', '" + book.getTitle() + "', '" + book.getIsbn() + "')";
+            String statement = "INSERT INTO BOOK (WRITER, TITLE, ISBN, DESCRIPTION) VALUES ('" 
+                    + book.getWriter() + "', '" + book.getTitle() + "', '" + book.getIsbn() + "', '" + book.getDescription() + "')";
 
             connection.createStatement().executeUpdate(statement);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    private List<Book> getBookById(Connection connection, Integer id) {
+        
+        try {
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM BOOK WHERE ID='" + id +"'"); 
+            List<Book> books = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Book book = createBookFromResultSetRow(resultSet);
+                if (book != null) {
+                    books.add(book);
+                }
+            }
+            resultSet.close();
+            return books;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }
