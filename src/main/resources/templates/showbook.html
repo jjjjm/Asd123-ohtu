@@ -15,15 +15,13 @@
             <a href="/books/new"> uusi kirja </a>
         </td> 
         
-        <ul>
-            <li th:each="book : ${books}">
-                <p><span th:text="${book.title}">hello world</span></p>
-                <td>
-                    <p>Kirjoittaja: <span th:text="${book.writer}">shdf</span></p>
-                    <p>Kuvaus: <span th:text="${book.description}">uwu</span></p>
-                </td>
-            </li>
-        </ul>
+
+        <p><span th:text="${book.title}">hello world</span></p>
+        <td>
+            <p>Kirjoittaja: <span th:text="${book.writer}">shdf</span></p>
+            <p>Kuvaus: <span th:text="${book.description}">uwu</span></p>
+        </td>
+
 
     </body>
 </html>

@@ -25,8 +25,13 @@ public class BookDaoForTests implements BookDao {
     }
     
     @Override
-    public List<Book> getBook(int id){
-        return books;
+    public Book getBook(int id){
+        for(int i = 0; i < books.size(); i++) {
+            if(books.get(i).getId() == id) {
+                return books.get(i);
+            }
+        }
+        return null;
     }
     
 }

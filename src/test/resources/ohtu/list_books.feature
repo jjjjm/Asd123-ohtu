@@ -15,3 +15,8 @@ Scenario: User can add book to database
   Given the user is at the new book page
   When book "TestiKirja" is created
   Then the page should list book "TestiKirja"
+
+Scenario: User is redirected to main page when trying to view book with id that does not exist in database
+  Given the user is at the main page
+  When requesting individual book page with id "-1"
+  Then the page should list book "Kirjat"

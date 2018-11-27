@@ -48,17 +48,17 @@ public class BookDaoPG implements BookDao {
     }
     
     @Override
-    public List<Book> getBook(int id) {
+    public Book getBook(int id) {
         Connection connection = getDatabaseConnection();
         if (connection == null) {
-            return new ArrayList<>();
+            return null;
         }
-        List<Book> books = getBookById(connection, id);
+        Book book = getBookById(connection, id);
         try {
             connection.close();
         } catch (Exception e) {
         }
-        return books;
+        return book;
     }
 
     private Connection getDatabaseConnection() {
@@ -136,23 +136,19 @@ public class BookDaoPG implements BookDao {
         }
     }
     
-    private List<Book> getBookById(Connection connection, Integer id) {
-        
+    private Book getBookById(Connection connection, Integer id) { 
         try {
             ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM BOOK WHERE ID='" + id +"'"); 
-            List<Book> books = new ArrayList<>();
+            Book book = null;
 
-            while (resultSet.next()) {
-                Book book = createBookFromResultSetRow(resultSet);
-                if (book != null) {
-                    books.add(book);
-                }
+            if(resultSet.next()) {
+                book = createBookFromResultSetRow(resultSet);
             }
             resultSet.close();
-            return books;
+            return book;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return null;
     }
 }

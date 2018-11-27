@@ -44,12 +44,13 @@ public class BookController {
         return "redirect:/books";
     }
     
-    //shows one book
-    @RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String showBook(Model model, @PathVariable Integer id) {
-
-        List<Book> books = bDao.getBook(id);   
-        model.addAttribute("books", books);
+        Book book = bDao.getBook(id);
+        if (book == null) {
+            return "redirect:/books";
+        }
+        model.addAttribute("book", book);
         return "showbook";
     }
 }

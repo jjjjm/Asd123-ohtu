@@ -90,6 +90,12 @@ public class Stepdefs {
         assertTrue(driver.getPageSource().contains(bookname));
     }
 
+    @When("^requesting individual book page with id \"([^\"]*)\"$")
+    public void requesting_individual_book_page_with_id(String id) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.get("http://localhost:" + 8080 + "/books/" + id);
+    }
+
     private void clickLinkWithText(String text) {
         int trials = 0;
         while (trials++ < 5) {
