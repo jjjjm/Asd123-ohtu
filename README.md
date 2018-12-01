@@ -60,7 +60,7 @@ Siirry projektikansioon komennolla ```cd Asd123-ohtu```. Käynnistä ohjelma kom
 Ohjelma käynnistyy. Sovellus käynnistyy osoitteeseen http://localhost:8080.
 
 ## Definition of done
-Ominaisuus toimii sovelluksessa ja sitä on testattu.
+Ohjelman toiminto on suunniteltu ja toteutettu sovittuja ohjelmointityylejä noudattaen. Toiminnolle on laadittu yksikkötestit tai cucumberilla suoritettava automaattinen hyväksymistestaus. Toiminto on lisätty Githubiin master-branchiin ja travis suorittaa sille tarkoitetut testit hyväksytysti.
 
 ## Muuta
 ryhmä-id: 5bed4c347aa7f8001ecd6d36
