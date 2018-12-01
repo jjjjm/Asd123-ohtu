@@ -88,6 +88,7 @@ public class BookDaoPG implements BookDao {
                 book = getBookById(connection, id);
             } catch (Exception e) {
                 // operation failed... print error message
+                e.printStackTrace();
             }
             // connection has not been closed yet, so close it now
             closeDatabaseConnection(connection);
@@ -211,7 +212,7 @@ public class BookDaoPG implements BookDao {
      * Helper method for getting book from database with specific id.
      */
     private Book getBookById(Connection connection, Integer id) throws Exception {
-        String query = "SELECT * FROM BOOK WHERE ID='?';";
+        String query = "SELECT * FROM BOOK WHERE ID = ?;";
         PreparedStatement prdstm = connection.prepareStatement(query);
         prdstm.setInt(PRDSTM_INDEX_1, id);
         ResultSet resultSet = prdstm.executeQuery();
@@ -227,14 +228,14 @@ public class BookDaoPG implements BookDao {
      * Helper method for updating book in database.
      */
     private void updateBook(Connection connection, Book book) throws Exception {
-        String statement = "UPDATE BOOK SET WRITER = '?', TITLE = '?', ISBN = '?', DESCRIPTION = '?' WHERE ID = '?';";
+        String statement = "UPDATE BOOK SET WRITER = ?, TITLE = ?, ISBN = ?, DESCRIPTION = ? WHERE ID = ?;";
         PreparedStatement prdstm = connection.prepareStatement(statement);
         prdstm.setString(PRDSTM_INDEX_1, book.getWriter());
         prdstm.setString(PRDSTM_INDEX_2, book.getTitle());
         prdstm.setString(PRDSTM_INDEX_3, book.getISBN());
         prdstm.setString(PRDSTM_INDEX_4, book.getDescription());
         prdstm.setInt(PRDSTM_INDEX_5, book.getId());
-        prdstm.execute();
+        prdstm.executeUpdate();
     }
 
 }
