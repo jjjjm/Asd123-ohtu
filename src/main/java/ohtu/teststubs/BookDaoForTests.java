@@ -39,7 +39,10 @@ public class BookDaoForTests implements BookDao {
     public void update(Book book) {
         for(Book b : this.books){
             if(b.getId() == book.getId()){
-                //todo
+                b.setTitle(book.getTitle());
+                b.setWriter(book.getWriter());
+                b.setISBN(book.getISBN());
+                b.setDescription(book.getDescription());
             }
         }
     }

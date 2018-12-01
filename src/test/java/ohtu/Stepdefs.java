@@ -112,7 +112,7 @@ public class Stepdefs {
         // Write code here that turns the phrase above into concrete actions
         assertEquals("http://localhost:8080/" + page, driver.getCurrentUrl());
     }
-    
+
     @Given("^book \"([^\"]*)\" exist in database$")
     public void book_exist_in_database(String bookname) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -129,6 +129,16 @@ public class Stepdefs {
         Thread.sleep(1000);
     }
 
+    @When("^changing book title to \"([^\"]*)\"$")
+    public void changing_book_title_to(String newBookTitle) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id("title"));
+        element.clear();
+        element.sendKeys(newBookTitle);
+        element = driver.findElement(By.id("submit"));
+        element.click();
+        Thread.sleep(1000);
+    }
 
     private void clickLinkWithText(String text) {
         int trials = 0;
