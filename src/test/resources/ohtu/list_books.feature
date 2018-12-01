@@ -19,7 +19,7 @@ Scenario: User can add book to database
 Scenario: User is redirected to main page when trying to view book with id that does not exist in database
   Given the user is at the main page
   When requesting individual book page with id "-1"
-  Then the page should list book "Kirjat"
+  Then the page should have a title "Kirjat"
 
 Scenario: User can view individual book page
   Given book "Testikirja" exist in database
