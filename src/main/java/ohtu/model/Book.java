@@ -92,4 +92,9 @@ public class Book {
         this.dayOfRead = dayOfRead;
     }
     
+    @Override
+    public String toString() {
+        return title + " by " + writer + ", " + description;
+    }
+    
 }
