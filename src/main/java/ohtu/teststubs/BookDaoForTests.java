@@ -46,5 +46,17 @@ public class BookDaoForTests implements BookDao {
             }
         }
     }
+
+    @Override
+    public List<Book> searchBooks(String keyword) {
+        List<Book> matches = new ArrayList<>();
+        for(Book book : books) {
+            if(book.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+                matches.add(book);
+            }
+        }
+        return matches;
+    }
+
     
 }

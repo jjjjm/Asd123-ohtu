@@ -10,6 +10,8 @@ public interface BookDao {
     
     public List<Book> list();   // retun list of books in database
     
+    public List<Book> searchBooks(String keyword);  // search books that contain keyword    
+    
     public Book getBook(int id); // search book by id
     
     public void update(Book book); //updates book values in database

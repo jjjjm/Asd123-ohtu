@@ -15,13 +15,13 @@ import org.h2.tools.RunScript;
  * BookDao implementation for postgreSQL database.
  */
 public class BookDaoPG implements BookDao {
-    
+
     private final int PRDSTM_INDEX_1 = 1;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_2 = 2;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_3 = 3;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_4 = 4;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_5 = 5;   // constant for preparedstatement variable placement
-    
+
     /**
      * Add book to database.
      *
@@ -60,6 +60,32 @@ public class BookDaoPG implements BookDao {
             // try to get all books from database
             try {
                 books = fetchAllBooks(connection);
+            } catch (Exception e) {
+                // operation failed... print error message
+                e.printStackTrace();
+            }
+            // connection has nod been closed yet, so close it now
+            closeDatabaseConnection(connection);
+        }
+        return books;
+    }
+
+    /**
+     * Get list of all books that contain the given keyword.
+     *
+     * @param keyword
+     * @return list of books
+     */
+    @Override
+    public List<Book> searchBooks(String keyword) {
+        List<Book> books = new ArrayList<>();
+        // get databse connection
+        Connection connection = getDatabaseConnection();
+        // proceed if connection is not null
+        if (connection != null) {
+            // try to get all books from database
+            try {
+                books = fetchBooksByKeyword(connection, keyword);
             } catch (Exception e) {
                 // operation failed... print error message
                 e.printStackTrace();
@@ -165,6 +191,25 @@ public class BookDaoPG implements BookDao {
     private List<Book> fetchAllBooks(Connection connection) throws Exception {
         String query = "SELECT * FROM BOOK;";
         PreparedStatement prdstm = connection.prepareStatement(query);
+        ResultSet resultSet = prdstm.executeQuery();
+        List<Book> books = new ArrayList<>();
+        while (resultSet.next()) {
+            Book book = createBookFromResultSet(resultSet);
+            if (book != null) {
+                books.add(book);
+            }
+        }
+        resultSet.close();
+        return books;
+    }
+
+    /**
+     * Helper method for getting all books in database.
+     */
+    private List<Book> fetchBooksByKeyword(Connection connection, String keyword) throws Exception {
+        String query = "SELECT * FROM BOOK WHERE LOWER(TITLE) LIKE ?;";
+        PreparedStatement prdstm = connection.prepareStatement(query);
+        prdstm.setString(PRDSTM_INDEX_1, "%" + keyword.toLowerCase() + "%");
         ResultSet resultSet = prdstm.executeQuery();
         List<Book> books = new ArrayList<>();
         while (resultSet.next()) {
