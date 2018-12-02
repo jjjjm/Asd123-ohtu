@@ -19,8 +19,8 @@ public class AllDaoForTests implements AllDao {
     
     @Override
     public List<Tip> list() {
-       tips = new ArrayList<>();
-       return tips;
+        tips = new ArrayList<>();
+        return tips;
     }
     
 }
