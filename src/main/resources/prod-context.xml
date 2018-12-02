@@ -3,8 +3,15 @@
     
     <bean id="bookDao" class="ohtu.dao.BookDaoPG" />
     
+    <bean id="allDao" class="ohtu.dao.AllDaoPG" />
+    
+    
     <bean id="bookController" class="ohtu.controller.BookController">
         <constructor-arg ref="bookDao"/>
     </bean>
+    <bean id="allController" class="ohtu.controller.AllController">
+        <constructor-arg ref="allDao"/>
+    </bean>
+               
     
 </beans>

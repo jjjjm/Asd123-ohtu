@@ -3,8 +3,14 @@
     
     <bean id="bookDao" class="ohtu.teststubs.BookDaoForTests" />
     
+    <bean id="allDao" class="ohtu.teststubs.AllDaoForTests" />
+    
     <bean id="bookController" class="ohtu.controller.BookController">
         <constructor-arg ref="bookDao"/>
+    </bean>
+    
+    <bean id="allController" class="ohtu.controller.AllController">
+        <constructor-arg ref="allDao" />
     </bean>
     
 </beans>
