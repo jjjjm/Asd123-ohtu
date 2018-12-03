@@ -265,7 +265,7 @@ public class BookDaoPG implements BookDao {
         String statement = "DELETE FROM BOOK WHERE ID = ?;";
         PreparedStatement prdstm = connection.prepareStatement(statement);
         prdstm.setInt(PRDSTM_INDEX_1, id);
-        prdstm.execute();
+        prdstm.executeUpdate();
     }
 
 }
