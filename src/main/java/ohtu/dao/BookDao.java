@@ -16,4 +16,6 @@ public interface BookDao {
     
     public void update(Book book); //updates book values in database
     
+    public void deleteBook(int id); //deletes book by id
+    
 }

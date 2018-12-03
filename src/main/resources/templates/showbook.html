@@ -40,7 +40,12 @@
                 
                 <p><input th:id="submit" type="submit" value="Submit" /></p> 
        	</form>
-
+        <br></br>
+        <h3>Poista kirja</h3>
+        <form action="#" th:action="@{'/books/' + ${book.id}} + '/delete'" th:object="${book}" method="delete">
+            <input th:id="submit" type="submit" value="Poista"/>
+        </form>    
+            
 
     </body>
 </html>

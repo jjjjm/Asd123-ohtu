@@ -144,6 +144,24 @@ public class BookDaoPG implements BookDao {
             closeDatabaseConnection(connection);
         }
     }
+    
+    /**
+     * Delete the book with given id
+     * 
+     * @param id book id
+     */
+    @Override
+    public void deleteBook(int id) {
+        Connection connection = getDatabaseConnection();
+        if (connection != null) {
+            try {
+                deleteBookById(connection, id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            closeDatabaseConnection(connection);
+        }  
+    }
 
     /**
      * Helper method for getting database connection.
@@ -281,6 +299,16 @@ public class BookDaoPG implements BookDao {
         prdstm.setString(PRDSTM_INDEX_4, book.getDescription());
         prdstm.setInt(PRDSTM_INDEX_5, book.getId());
         prdstm.executeUpdate();
+    }
+    
+    /**
+     * Helper method for deleting a book by its id
+     */
+    private void deleteBookById(Connection connection, int id) throws Exception {
+        String statement = "DELETE FROM BOOK WHERE ID = ?;";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, id);
+        prdstm.execute();
     }
 
 }

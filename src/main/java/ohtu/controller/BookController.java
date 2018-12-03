@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -57,6 +58,12 @@ public class BookController {
     @PostMapping(value = "/{id}")
     public String updateBook(@ModelAttribute Book book, @PathVariable Integer id) {
         bDao.update(book);
+        return "redirect:/books";
+    }
+    
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+    public String deleteBook(@PathVariable Integer id) {
+        bDao.deleteBook(id);
         return "redirect:/books";
     }
 }
