@@ -21,10 +21,7 @@ public class BookDaoPGTest {
         bdaopg = new BookDaoPG();
         // try to clear database before each test
         try {
-            String databaseAddress = "jdbc:postgresql:" + System.getenv("DB_NAME");
-            String user = System.getenv("DB_USER");
-            String password = System.getenv("DB_PASSWORD");
-            Connection connection = DriverManager.getConnection(databaseAddress, user, password);
+            Connection connection = ConnectionHandler.getDatabaseConnection();
             RunScript.execute(connection, new FileReader("sql/database-clear.sql"));
             connection.close();
         } catch (Exception e) {
@@ -71,7 +68,7 @@ public class BookDaoPGTest {
         book = bdaopg.getBook(book.getId());
         assertEquals("Tietokannan salat", book.getTitle());
     }
-    
+
     @Test
     public void updateBookWorks() {
         // lisätään kirja kantaan
@@ -94,4 +91,30 @@ public class BookDaoPGTest {
         assertEquals("Very good", book.getDescription());
     }
 
+    @Test
+    public void searchBooksByKeywordWorks() {
+        // lisätään kolme kirjaa kantaan
+        today = new Date();
+        bdaopg.add(new Book(1, "Testikirja", "Anon", "123", "Kuvaus", false, today));
+        bdaopg.add(new Book(1, "Kirja", "Anon", "124", "Kuvaus", false, today));
+        bdaopg.add(new Book(1, "Booker", "Anon", "125", "Kuvaus", false, today));
+        // haetaan lista kirjoja jotka sisältävät hakusanan "KIRJA" --> 2 kpl
+        List<Book> books = bdaopg.searchBooks("KIRJA");
+        assertEquals(2, books.size());
+    }
+
+    @Test
+    public void deleteBookWorks() {
+        // lisätään kaksi kirjaa kantaan
+        today = new Date();
+        bdaopg.add(new Book(1, "Testikirja", "Anon", "123", "Kuvaus", false, today));
+        bdaopg.add(new Book(2, "Kirja", "Anon", "124", "Kuvaus", false, today));
+        // poistetaan kirja joka lisättiin viimeisenä
+        List<Book> books = bdaopg.list();
+        String titleRemaining = books.get(1).getTitle();    // title of book which was not deleted
+        bdaopg.deleteBook(books.get(0).getId());
+        books = bdaopg.list();
+        assertEquals(1, books.size());
+        assertEquals(titleRemaining, books.get(0).getTitle());
+    }
 }

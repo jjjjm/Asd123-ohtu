@@ -60,7 +60,12 @@ public class BookDaoForTests implements BookDao {
     
     @Override
     public void deleteBook(int id) {
-        
+        for(int i = books.size() - 1; i >= 0; i--) {
+            if(books.get(i).getId() == id) {
+                books.remove(i);
+                return;
+            }
+        }
     }
     
 }
