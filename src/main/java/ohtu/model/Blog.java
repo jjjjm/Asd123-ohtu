@@ -77,6 +77,10 @@ public class Blog {
     public void setDayOfRead(Date dayOfRead) {
         this.dayOfRead = dayOfRead;
     }
-    
+
+    @Override
+    public String toString() {
+        return title + " by " + writer + ", " + description;
+    }
     
 }

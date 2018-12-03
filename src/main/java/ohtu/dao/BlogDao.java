@@ -14,4 +14,6 @@ public interface BlogDao {
     
     public void update(Blog blog); //updates blog values in database
     
+    public void deleteBlog(int id); //deletes blog by id
+    
 }

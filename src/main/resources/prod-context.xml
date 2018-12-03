@@ -5,6 +5,7 @@
     
     <bean id="allDao" class="ohtu.dao.AllDaoPG" />
     
+    <bean id="blogDao" class="ohtu.dao.BlogDaoPG" />
     
     <bean id="bookController" class="ohtu.controller.BookController">
         <constructor-arg ref="bookDao"/>
