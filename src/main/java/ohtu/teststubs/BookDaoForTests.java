@@ -57,6 +57,10 @@ public class BookDaoForTests implements BookDao {
         }
         return matches;
     }
-
+    
+    @Override
+    public void deleteBook(int id) {
+        
+    }
     
 }
