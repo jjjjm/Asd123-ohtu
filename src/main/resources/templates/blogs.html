@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blogi-vinkit</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <p></p>
+        <td>
+            <a href="/"> etusivu </a>
+        </td>
+        &nbsp; &nbsp;
+        <td>
+            <a href="/blogs/new"> uusi blogivinkki </a>
+        </td>
+        &nbsp; &nbsp;
+        <td>
+        </td>
+        
+        <h2>Blogs in database</h2>
+        
+        <!-- print all the values in list -->
+        <ul>
+            <li th:each="blog : ${blogs}">
+                <span th:text="${blog.title}">hello world</span>
+                <p></p>
+            <td>
+                Kirjoittaja: <span th:text="${blog.writer}">kk</span>
+                <p></p>
+                URL: <span th:text="${blog.url}">jj</span>
+                <p></p>
+                Kuvaus: <span th:text="${blog.description}">hh</span>
+                <p></p>
+                <a th:href="@{'/blogs/' + ${blog.id}}">Lisätietoja / muokkaus</a>
+                <p></p>
+            </td>
+            </li>
+        </ul>
+  
+    </body>
+</html>

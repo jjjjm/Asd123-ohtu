@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Uusi blogivinkki</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        
+        <td>
+            <a href="/"> etusivu </a>
+        </td>
+        &nbsp; &nbsp;
+        <p></p>
+        
+        <div>Create new blog</div>
+        
+        <form action="#" th:action="@{/blogs/new}" th:object="${blog}" method="post">
+                <p>title: <input th:id="title" type="text" th:field="${blog.title}" /></p>
+               	<p>writer <input th:id="writer" type="text" th:field="${blog.writer}" /></p>
+                <p>URL: <input th:id="url" type="text" th:field="${blog.url}" /></p>
+                <p>description:</p> <textarea th:id="description" th:field="${blog.description}"></textarea>
+                
+                <p><input th:id="submit" type="submit" value="Submit" /></p> 
+       	</form>
+
+    </body>
+</html>

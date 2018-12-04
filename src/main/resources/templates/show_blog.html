@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blogivinkki</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <p></p>
+        <td>
+            <a href="/"> etusivu </a>
+        </td>
+        &nbsp; &nbsp;
+        <td>
+            <a href="/blogs/new"> uusi blogi </a>
+        </td> 
+        &nbsp; &nbsp;
+        <td>
+            <a href="/blogs"> blogivalikko </a>
+        </td> 
+        <br></br>
+        
+        <h2>Kirjan tiedot</h2>
+        <p><span th:text="${blog.title}">hello world</span></p>
+        <td>
+            <p>Kirjoittaja: <span th:text="${blog.writer}">ll</span></p>
+            <p>ISBN:    <span th:text="${blog.url}">ll</span></p>
+            <p>Kuvaus:  <span th:text="${blog.description}">ll</span></p>
+            <p>Luettu:  <span th:text="${blog.isRead ? 'Kyllä' : 'Ei' }">ll</span></p>
+            <p>Päiväys: <span th:text="${blog.isRead ? blog.dayOfRead : 'N/A'}">ll</span></p>
+        </td>
+        
+        <br></br><br></br>
+        <h3>Muokkaa blogikirjoituksen tietoja</h3>
+                <form action="#" th:action="@{'/blogs/' + ${blog.id}}" th:object="${blog}" method="post">
+                <p>Nimi: <input th:id="title" type="text" th:field="${blog.title}" /></p>
+               	<p>Kirjoittaja: <input th:id="author" type="text" th:field="${blog.writer}" /></p>
+                <p>URL: <input th:id="url" type="text" th:field="${blog.url}" /></p>
+                <p>Kuvaus:</p> <textarea th:id="description" th:field="${blog.description}"></textarea>
+                
+                <p><input th:id="submit" type="submit" value="Submit" /></p> 
+       	</form>
+        <br></br>
+        <h3>Poista blogivinkki</h3>
+        <form action="#" th:action="@{'/blogs/' + ${blog.id}} + '/delete'" th:object="${blog}" method="delete">
+            <input th:id="submit" type="submit" value="Poista"/>
+        </form>    
+            
+
+    </body>
+</html>
