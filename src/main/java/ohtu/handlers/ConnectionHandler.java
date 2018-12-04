@@ -56,16 +56,19 @@ public class ConnectionHandler {
      * Closing a database connection
      *
      * @param connection
+     * @return true if connection was closed
      */
-    public void closeDatabaseConnection(Connection connection) {
+    public boolean closeDatabaseConnection(Connection connection) {
         try {
             // try to close the databse connection
             connection.close();
+            return true;
         } catch (Exception e) {
             // something went wrong and connection was not closed properly
             // print the error message
             e.printStackTrace();
         }
+        return false;
     }
 
 }

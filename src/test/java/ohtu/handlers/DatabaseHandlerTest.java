@@ -4,6 +4,7 @@ package ohtu.handlers;
 import java.io.FileReader;
 import java.sql.Connection;
 import org.h2.tools.RunScript;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -26,7 +27,6 @@ public class DatabaseHandlerTest {
             e.printStackTrace();
         }
     }
-
 
     @Test
     public void ConstructorWorks() {
