@@ -7,31 +7,38 @@
     </head>
     <body>
         <p></p>
+    <td>
+        <a href="/"> etusivu </a>
+    </td>
+    &nbsp; &nbsp;
+    <td>
+        <a href="/books/new"> uusi kirja </a>
+    </td> 
+
+    <h2>Books in database</h2>
+
+    <!-- input field for search + button -->
+
+    <form action="#" th:action="@{/books/}" method="get">
+        <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Search..." />
+        <input th:id="search" type="submit" value="Search" /> 
+    </form>
+
+    <!-- print all the values in list -->
+    <ul>
+        <li th:each="book : ${books}">
+            <span th:text="${book.title}">hello world</span>
+            <p></p>
         <td>
-            <a href="/"> etusivu </a>
+            Tekijä: <span th:text="${book.writer}">kk</span>
+            <p></p>
+            Kuvaus: <span th:text="${book.description}">hh</span>
+            <p></p>
+            <a th:href="@{'/books/' + ${book.id}}">Lisätietoja / muokkaus</a>
+            <p></p>
         </td>
-        &nbsp; &nbsp;
-        <td>
-            <a href="/books/new"> uusi kirja </a>
-        </td> 
-        
-        <h2>Books in database</h2>
-        
-        <!-- print all the values in list -->
-        <ul>
-            <li th:each="book : ${books}">
-                <span th:text="${book.title}">hello world</span>
-                <p></p>
-            <td>
-                Tekijä: <span th:text="${book.writer}">kk</span>
-                <p></p>
-                Kuvaus: <span th:text="${book.description}">hh</span>
-                <p></p>
-                <a th:href="@{'/books/' + ${book.id}}">Lisätietoja / muokkaus</a>
-                <p></p>
-            </td>
-            </li>
-        </ul>
-  
-    </body>
+    </li>
+</ul>
+
+</body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -28,8 +29,13 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model) {
-        List<Book> books = bDao.list();
+    public String list(@RequestParam(name="keyword", required=false, defaultValue="") String keyword, Model model) {
+        List<Book> books;
+        if(keyword.isEmpty()) {
+            books = bDao.list();
+        }else{
+            books = bDao.searchBooks(keyword);
+        }
         model.addAttribute("books", books);
         return "books";
     }
@@ -61,7 +67,7 @@ public class BookController {
         return "redirect:/books";
     }
     
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET) // RequestMethod.DELETE?
     public String deleteBook(@PathVariable Integer id) {
         bDao.deleteBook(id);
         return "redirect:/books";
