@@ -98,4 +98,12 @@ public class BookTest {
         book.setDayOfRead(changedDate);
         assertEquals(changedDate, book.getDayOfRead());
     }
+    
+    @Test
+    public void toStringWorks() {
+        book.setTitle("HackersCookBook");
+        book.setWriter("Anonymous");
+        book.setDescription("Introduction to ethical hacking");
+        assertEquals("HackersCookBook by Anonymous, Introduction to ethical hacking", book.toString());
+    }
 }
