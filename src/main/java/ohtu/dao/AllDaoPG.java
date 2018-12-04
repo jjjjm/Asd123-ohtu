@@ -11,33 +11,40 @@ import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
+import ohtu.model.Blog;
 import ohtu.model.Book;
 import org.h2.tools.RunScript;
 
 
 public class AllDaoPG implements AllDao {
-    private BookDao bDao;
+    private BookDao bookDao;
+    private BlogDao blogDao;
  
  
  
     @Override
     public List<Tip> list() {
-        bDao = new BookDaoPG();
-      // get connection to database
-                // get list of books
-        List<Book> books = bDao.list();
-       
-        //books to tips
+        bookDao = new BookDaoPG();
+        blogDao = new BlogDaoPG();
         List<Tip> tips = new ArrayList<>();
+        // books to tips
+        List<Book> books = bookDao.list();          
         for (Book book: books){
             Tip tip = new Tip();
             tip.setId(book.getId());
             tip.setType("/books/");
             tip.setText(book.toString());
             tips.add(tip);
-            
         }
-        
+        //blogs to tips
+        List<Blog> blogs = blogDao.list();
+        for (Blog blog: blogs){
+            Tip tip = new Tip();
+            tip.setId(blog.getId());
+            tip.setType("/blogs/");
+            tip.setText(blog.toString());
+            tips.add(tip);
+        }
         return tips; 
     }    
 }
