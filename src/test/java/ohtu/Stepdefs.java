@@ -8,7 +8,6 @@ import java.io.File;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -151,9 +150,20 @@ public class Stepdefs {
 
     @Then("^the page should not list book \"([^\"]*)\"")
     public void page_should_not_list_book(String bookName) throws Throwable {
-        System.out.println(driver.getCurrentUrl());
+        //System.out.println(driver.getCurrentUrl());
         assertFalse(driver.getPageSource().contains(bookName));
     }
+    
+    @When("^user searches books by keyword \"([^\"]*)\"$")
+    public void user_searches_books_by_keyword(String keyword) throws Throwable {
+        WebElement element = driver.findElement(By.id("searchfield"));
+        element.clear();
+        element.sendKeys(keyword);
+        element = driver.findElement(By.id("search"));
+        element.click();
+        Thread.sleep(500);
+    }
+
 
     private void clickLinkWithText(String text) {
         int trials = 0;
