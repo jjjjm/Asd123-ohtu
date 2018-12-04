@@ -6,7 +6,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import java.io.File;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -90,7 +92,7 @@ public class Stepdefs {
         element.sendKeys("Anonymous");
         element = driver.findElement(By.id("isbn"));
         element.sendKeys("123456789");
-        element = driver.findElement(By.id("submit"));
+        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
         element.click();
     }
 
@@ -138,6 +140,19 @@ public class Stepdefs {
         element = driver.findElement(By.id("submit"));
         element.click();
         Thread.sleep(1000);
+    }
+
+    @When("^button \"([^\"]*)\" is pressed")
+    public void pressing_button_on_page_by_name(String buttonName) throws Throwable {
+        WebElement element = driver.findElement(By.xpath("//*[@id='submit'][@value='" + buttonName + "']"));
+        element.click();
+        Thread.sleep(1000);
+    }
+
+    @Then("^the page should not list book \"([^\"]*)\"")
+    public void page_should_not_list_book(String bookName) throws Throwable {
+        System.out.println(driver.getCurrentUrl());
+        assertFalse(driver.getPageSource().contains(bookName));
     }
 
     private void clickLinkWithText(String text) {

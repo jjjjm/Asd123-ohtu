@@ -16,8 +16,13 @@ public class BookDaoForTests implements BookDao {
     
     @Override
     public void add(Book book) {
+        this.reset();
         book.setId(books.size() + 1);
         books.add(book);
+    }
+    
+    private void reset() {
+        this.books = new ArrayList<>();
     }
 
     @Override
