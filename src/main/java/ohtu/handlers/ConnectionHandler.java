@@ -71,4 +71,13 @@ public class ConnectionHandler {
         return false;
     }
 
+    /**
+     * Get database address.
+     *
+     * @return address
+     */
+    public String getDatabaseAddress() {
+        return this.databaseAddress;
+    }
+
 }

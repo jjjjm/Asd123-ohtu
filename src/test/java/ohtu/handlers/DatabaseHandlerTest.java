@@ -1,4 +1,3 @@
-
 package ohtu.handlers;
 
 import java.io.FileReader;
@@ -15,7 +14,6 @@ import static org.junit.Assert.*;
  */
 public class DatabaseHandlerTest {
 
-    
     @Before
     public void setUp() {
         // before each test, the database tables must be dropped
@@ -23,7 +21,21 @@ public class DatabaseHandlerTest {
         Connection connection = conHandler.getDatabaseConnection();
         try {
             RunScript.execute(connection, new FileReader("sql/database-drop.sql"));
-        }catch (Exception e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @After
+    public void restoreTestDatabaseToNormal() {
+        // after tests make sure that database is back to normal
+        ConnectionHandler conHandler = new ConnectionHandler();
+        Connection connection = conHandler.getDatabaseConnection();
+        try {
+            RunScript.execute(connection, new FileReader("sql/database-drop.sql"));
+            RunScript.execute(connection, new FileReader("sql/database-schema.sql"));
+            RunScript.execute(connection, new FileReader("sql/database-import.sql"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -33,14 +45,14 @@ public class DatabaseHandlerTest {
         DatabaseHandler dbHandler = new DatabaseHandler(null);
         assertTrue(dbHandler.getConnection() == null);
     }
-    
+
     @Test
     public void initDatabaseWithNullConnectionWorksAsExpected() {
         DatabaseHandler dbHandler = new DatabaseHandler(null);
         assertFalse(dbHandler.initDatabase());
     }
-    
-    @Test 
+
+    @Test
     public void initDatabaseWithValidConnectionWorks() {
         ConnectionHandler conHandler = new ConnectionHandler();
         DatabaseHandler dbHandler = new DatabaseHandler(conHandler.getDatabaseConnection());

@@ -35,4 +35,12 @@ public class ConnectionHandlerTest {
         ConnectionHandler conHandler = new ConnectionHandler();
         assertTrue(conHandler.getDatabaseConnection() != null);
     }
+    
+    @Test
+    public void constructorWithParametersWorks() {
+        ConnectionHandler conHandler = new ConnectionHandler(null, "admin", "admin");
+        assertTrue(conHandler.getDatabaseAddress() != null);
+        conHandler = new ConnectionHandler("", "admin", "admin");
+        assertTrue(!conHandler.getDatabaseAddress().isEmpty());
+    }
 }
