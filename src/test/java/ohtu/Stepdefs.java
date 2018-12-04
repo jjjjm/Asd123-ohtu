@@ -153,7 +153,7 @@ public class Stepdefs {
         //System.out.println(driver.getCurrentUrl());
         assertFalse(driver.getPageSource().contains(bookName));
     }
-    
+
     @When("^user searches books by keyword \"([^\"]*)\"$")
     public void user_searches_books_by_keyword(String keyword) throws Throwable {
         WebElement element = driver.findElement(By.id("searchfield"));
@@ -163,6 +163,53 @@ public class Stepdefs {
         element.click();
         Thread.sleep(500);
     }
+
+    @Given("^the user is at the new blog page$")
+    public void the_user_is_at_the_new_blog_page() throws Throwable {
+        driver.get("http://localhost:" + 8080 + "/" + "blogs/new");
+        Thread.sleep(500);
+    }
+
+    @Given("^the user is at the blog listing page$")
+    public void the_user_is_at_the_blog_listing_page() throws Throwable {
+        driver.get("http://localhost:" + 8080 + "/blogs");
+        Thread.sleep(500);
+    }
+
+    @Given("^blog with title \"([^\"]*)\", Writer \"([^\"]*)\" and description \"([^\"]*)\" exists in database$")
+    public void blog_exisists(String title, String writer, String description) throws Throwable {
+        driver.get("http://localhost:" + 8080 + "/" + "blogs/new");
+        Thread.sleep(500);
+        WebElement element = driver.findElement(By.id("title"));
+        element.sendKeys(title);
+        element = driver.findElement(By.id("writer"));
+        element.sendKeys(writer);
+        element = driver.findElement(By.id("description"));
+        element.sendKeys(description);
+        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element.click();
+        Thread.sleep(500);
+    }
+
+    @When("^blog with title \"([^\"]*)\", Writer \"([^\"]*)\" and description \"([^\"]*)\" is created$")
+    public void blog_is_created(String title, String writer, String description) throws Throwable {
+        WebElement element = driver.findElement(By.id("title"));
+        element.sendKeys(title);
+        element = driver.findElement(By.id("writer"));
+        element.sendKeys(writer);
+        element = driver.findElement(By.id("description"));
+        element.sendKeys(description);
+        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element.click();
+        Thread.sleep(500);
+    }
+
+    @When("^requesting individual blog page with id \"([^\"]*)\"$")
+    public void requesting_individual_blog_page_with_id(String id) throws Throwable {
+        driver.get("http://localhost:" + 8080 + "/blogs/" + id);
+        Thread.sleep(500);
+    }
+
 
 
     private void clickLinkWithText(String text) {

@@ -20,7 +20,7 @@ public class BookDaoForTests implements BookDao {
         book.setId(books.size() + 1);
         books.add(book);
     }
-    
+    //Quick fix for deletion test, needs more elegant solution maybe
     private void reset() {
         this.books = new ArrayList<>();
     }
