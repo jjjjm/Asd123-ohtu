@@ -53,7 +53,7 @@ public class BlogController {
             return "redirect:/blogs";
         }
         model.addAttribute("blog", blog);
-        return "showblog";
+        return "show_blog";
     }
     
     @PostMapping(value = "/{id}")

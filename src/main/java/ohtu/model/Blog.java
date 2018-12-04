@@ -21,6 +21,10 @@ public class Blog {
         this.isRead = isRead;
         this.dayOfRead = dayOfRead;
     }
+    
+    public Blog() {
+        
+    }
 
     public int getId() {
         return id;
