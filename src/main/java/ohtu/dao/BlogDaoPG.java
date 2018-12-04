@@ -1,6 +1,7 @@
 
 package ohtu.dao;
 
+import ohtu.handlers.ConnectionHandler;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,14 +21,15 @@ public class BlogDaoPG implements BlogDao{
 
     @Override
     public void add(Blog blog) {
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         if (connection != null) {
             try {
                 addBlogToDatabase(connection, blog);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
     }
 
@@ -35,7 +37,8 @@ public class BlogDaoPG implements BlogDao{
     public List<Blog> list() {
         List<Blog> blogs = new ArrayList<>();
         // get databse connection
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         // proceed if connection is not null
         if (connection != null) {
             // try to get all books from database
@@ -46,7 +49,7 @@ public class BlogDaoPG implements BlogDao{
                 e.printStackTrace();
             }
             // connection has nod been closed yet, so close it now
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
         return blogs;
     }
@@ -59,21 +62,23 @@ public class BlogDaoPG implements BlogDao{
     @Override
     public Blog getBlog(int id) {
         Blog blog = null;
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         if (connection != null) {
             try {
                 blog = getBlogById(connection, id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
         return blog; 
     }
 
     @Override
     public void update(Blog blog) {
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         if (connection != null) {
             try {
                 updateBlog(connection, blog);
@@ -81,20 +86,21 @@ public class BlogDaoPG implements BlogDao{
 
                 e.printStackTrace();
             }
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         } 
     }
 
     @Override
     public void deleteBlog(int id) {
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         if (connection != null) {
             try {
                 deleteBlogById(connection, id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         } 
     }
     

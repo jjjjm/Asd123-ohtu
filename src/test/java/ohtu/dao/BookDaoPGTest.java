@@ -1,8 +1,8 @@
 package ohtu.dao;
 
+import ohtu.handlers.ConnectionHandler;
 import java.io.FileReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import ohtu.model.Book;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,8 @@ public class BookDaoPGTest {
         bdaopg = new BookDaoPG();
         // try to clear database before each test
         try {
-            Connection connection = ConnectionHandler.getDatabaseConnection();
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            Connection connection = connectionHandler.getDatabaseConnection();
             RunScript.execute(connection, new FileReader("sql/database-clear.sql"));
             connection.close();
         } catch (Exception e) {

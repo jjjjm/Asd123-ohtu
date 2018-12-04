@@ -1,5 +1,6 @@
 package ohtu.dao;
 
+import ohtu.handlers.ConnectionHandler;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +28,8 @@ public class BookDaoPG implements BookDao {
     @Override
     public void add(Book book) {
         // get database connection
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         // proceed if connection is not null
         if (connection != null) {
             // try to add book to database
@@ -38,7 +40,7 @@ public class BookDaoPG implements BookDao {
                 e.printStackTrace();
             }
             // connection has not been closed yet, so close it now
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
     }
 
@@ -51,7 +53,8 @@ public class BookDaoPG implements BookDao {
     public List<Book> list() {
         List<Book> books = new ArrayList<>();
         // get databse connection
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         // proceed if connection is not null
         if (connection != null) {
             // try to get all books from database
@@ -62,7 +65,7 @@ public class BookDaoPG implements BookDao {
                 e.printStackTrace();
             }
             // connection has nod been closed yet, so close it now
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
         return books;
     }
@@ -77,7 +80,8 @@ public class BookDaoPG implements BookDao {
     public List<Book> searchBooks(String keyword) {
         List<Book> books = new ArrayList<>();
         // get databse connection
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         // proceed if connection is not null
         if (connection != null) {
             // try to get all books from database
@@ -88,7 +92,7 @@ public class BookDaoPG implements BookDao {
                 e.printStackTrace();
             }
             // connection has nod been closed yet, so close it now
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
         return books;
     }
@@ -103,7 +107,8 @@ public class BookDaoPG implements BookDao {
     public Book getBook(int id) {
         Book book = null;
         // get database connection
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         // proceed if connection is not null
         if (connection != null) {
             // try to retrieve book from database
@@ -114,7 +119,7 @@ public class BookDaoPG implements BookDao {
                 e.printStackTrace();
             }
             // connection has not been closed yet, so close it now
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
         return book;
     }
@@ -127,7 +132,8 @@ public class BookDaoPG implements BookDao {
     @Override
     public void update(Book book) {
         // get database connection
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         // proceed if connection is not null
         if (connection != null) {
             // try to update the book in database
@@ -138,7 +144,7 @@ public class BookDaoPG implements BookDao {
                 e.printStackTrace();
             }
             // connection has no been closed yet, sol close it now
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
     }
 
@@ -149,14 +155,15 @@ public class BookDaoPG implements BookDao {
      */
     @Override
     public void deleteBook(int id) {
-        Connection connection = ConnectionHandler.getDatabaseConnection();
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
         if (connection != null) {
             try {
                 deleteBookById(connection, id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ConnectionHandler.closeDatabaseConnection(connection);
+            conHandler.closeDatabaseConnection(connection);
         }
     }
 
