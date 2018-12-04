@@ -36,4 +36,13 @@ public class DatabaseHandler {
         return false;
     }
 
+    /**
+     * Get database connection which handler uses.
+     *
+     * @return connection
+     */
+    public Connection getConnection() {
+        return connection;
+    }
+
 }
