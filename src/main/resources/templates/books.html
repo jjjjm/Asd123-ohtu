@@ -13,7 +13,7 @@
     <body>
 
         <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" href="#page-top">Lukuvinkkikirjasto</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,13 +25,13 @@
                             <a class="nav-link js-scroll-trigger" href="/">etusivu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="books">Kirjat</a>
+                            <a class="nav-link js-scroll-trigger" href="/books">Kirjat</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="blogs">Blogit</a>
+                            <a class="nav-link js-scroll-trigger" href="/blogs">Blogit</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="all">Kaikki vinkit</a>
+                            <a class="nav-link js-scroll-trigger" href="/all">Kaikki vinkit</a>
                         </li>
                     </ul>
                 </div>
@@ -42,16 +42,21 @@
         <!-- Page content --> 
         <div class="container">
 
-            <a href="/books/new"> uusi kirja </a>
-
             <h2>Books in database</h2>
 
+            <div class="row">
+                <div class="col-sm">
+                    <!-- input field for search + button -->
+                    <form action="#" th:action="@{/books/}" method="get">
+                        <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Search..." />
+                        <input th:id="search" type="submit" value="Search" /> 
+                    </form>
+                </div>
+                <div class="col-sm-auto">
+                    <a href="/books/new"> uusi kirja </a>                    
+                </div>
+            </div>
 
-            <!-- input field for search + button -->
-            <form action="#" th:action="@{/books/}" method="get">
-                <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Search..." />
-                <input th:id="search" type="submit" value="Search" /> 
-            </form>
 
             <!-- fill a table with values -->
             <table class="table table-striped">
@@ -76,7 +81,7 @@
                     </td>
                 </tr>
             </table>
-            
+
         </div>
 
 
@@ -85,5 +90,5 @@
         <!-- Compiled and minified JavaScript -->
         <script src="/js/bootstrap.min.js"></script>
     </body>
-    
+
 </html>
