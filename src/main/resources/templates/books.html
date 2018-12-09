@@ -1,44 +1,89 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <title>Kirjat</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- minified Bootstrap css -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     </head>
+
     <body>
-        <p></p>
-    <td>
-        <a href="/"> etusivu </a>
-    </td>
-    &nbsp; &nbsp;
-    <td>
-        <a href="/books/new"> uusi kirja </a>
-    </td> 
 
-    <h2>Books in database</h2>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Lukuvinkkikirjasto</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/">etusivu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="books">Kirjat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="blogs">Blogit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="all">Kaikki vinkit</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-    <!-- input field for search + button -->
 
-    <form action="#" th:action="@{/books/}" method="get">
-        <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Search..." />
-        <input th:id="search" type="submit" value="Search" /> 
-    </form>
+        <!-- Page content --> 
+        <div class="container">
 
-    <!-- print all the values in list -->
-    <ul>
-        <li th:each="book : ${books}">
-            <span th:text="${book.title}">hello world</span>
-            <p></p>
-        <td>
-            Tekijä: <span th:text="${book.writer}">kk</span>
-            <p></p>
-            Kuvaus: <span th:text="${book.description}">hh</span>
-            <p></p>
-            <a th:href="@{'/books/' + ${book.id}}">Lisätietoja / muokkaus</a>
-            <p></p>
-        </td>
-    </li>
-</ul>
+            <a href="/books/new"> uusi kirja </a>
 
-</body>
+            <h2>Books in database</h2>
+
+
+            <!-- input field for search + button -->
+            <form action="#" th:action="@{/books/}" method="get">
+                <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Search..." />
+                <input th:id="search" type="submit" value="Search" /> 
+            </form>
+
+            <!-- fill a table with values -->
+            <table class="table table-striped">
+                <tr>
+                    <th>Nimi</th>
+                    <th>Kirjailija</th>
+                    <th>Kuvaus</th>
+                    <th></th>
+                </tr>
+                <tr th:each="book: ${books}">
+                    <td>
+                        <span th:text="${book.title}">title</span>
+                    </td>
+                    <td>
+                        <span th:text="${book.writer}">writer</span>
+                    </td>
+                    <td>
+                        <span th:text="${book.description}">description</span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/books/' + ${book.id}}">Lisätietoja / muokkaus</a>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+
+
+
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="/js/bootstrap.min.js"></script>
+    </body>
+    
 </html>
