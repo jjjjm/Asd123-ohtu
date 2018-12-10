@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Kaikki vinkit</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- minified Bootstrap css -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Lukuvinkkikirjasto</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/">Etusivu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/books">Kirjat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/blogs">Blogit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/all">Kaikki vinkit</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Page content --> 
+        <div class="container">
+            <br/>
+            <h2>Tips in database</h2>
+
+            
+            <!-- fill a table with values -->
+            <table class="table table-striped">
+                <tr>
+                    <th>Vinkki</th>
+                    <th></th>
+                </tr>
+                <tr  th:each="tip : ${tips}">
+                    <td>
+                         <span th:text="${tip.toString()}">vinkki</span>
+
+                    </td>
+                    <td>
+                       <a th:href="@{${tip.type}+${tip.id}}">Lisätietoja </a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="/js/bootstrap.min.js"></script>
+    </body>
+
+</html>
+        
