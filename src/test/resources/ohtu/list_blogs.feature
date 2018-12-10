@@ -25,4 +25,4 @@ Feature: user can list blogs in database
     Given blog with title "testblog1", Writer "testwriter" and description "testdesc" exists in database
     And the user is at the blog listing page
     When the "Lisätietoja / muokkaus" link is clicked
-    Then the user should be at page "blogs/1"
+    Then the page should have a title "Blogivinkki"

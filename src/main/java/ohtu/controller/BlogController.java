@@ -1,11 +1,9 @@
 
 package ohtu.controller;
 
-import java.sql.Connection;
 import java.util.List;
 import ohtu.dao.BlogDao;
 import ohtu.model.Blog;
-import ohtu.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

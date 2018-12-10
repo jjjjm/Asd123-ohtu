@@ -50,7 +50,7 @@ public class BlogDaoForTests implements BlogDao {
         for (Blog b : this.blogs) {
             if (blog.getId() == b.getId()) {
                 b.setWriter(blog.getWriter());
-                b.setTitle(blog.getWriter());
+                b.setTitle(blog.getTitle());
                 b.setUrl(blog.getUrl());
                 b.setDescription(blog.getDescription());
             }

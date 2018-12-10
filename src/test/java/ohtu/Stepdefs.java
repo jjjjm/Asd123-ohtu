@@ -210,6 +210,22 @@ public class Stepdefs {
         Thread.sleep(500);
     }
 
+    @When("^changing blog title to \"([^\"]*)\"$")
+    public void changing_blog_title_to(String newTitle) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id("title"));
+        element.clear();
+        element.sendKeys(newTitle);
+        element = driver.findElement(By.id("submit"));
+        element.click();
+        Thread.sleep(500);
+    }
+
+    @Then("^the page should list blog \"([^\"]*)\"$")
+    public void the_page_should_list_blog(String blogName) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        assertTrue(driver.getPageSource().contains(blogName));
+    }
 
 
     private void clickLinkWithText(String text) {
