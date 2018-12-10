@@ -22,7 +22,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="/">etusivu</a>
+                            <a class="nav-link js-scroll-trigger" href="/">Etusivu</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link js-scroll-trigger" href="/books">Kirjat</a>
@@ -42,18 +42,18 @@
         <!-- Page content --> 
         <div class="container">
 
-            <h2>Books in database</h2>
+            <h2>Kirjavinkit</h2>
 
             <div class="row">
                 <div class="col-sm">
                     <!-- input field for search + button -->
                     <form action="#" th:action="@{/books/}" method="get">
-                        <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Search..." />
-                        <input th:id="search" type="submit" value="Search" /> 
+                        <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Hakusana..." />
+                        <input th:id="search" type="submit" value="Hae" /> 
                     </form>
                 </div>
                 <div class="col-sm-auto">
-                    <a href="/books/new"> uusi kirja </a>                    
+                    <a href="/books/new" class="btn btn-primary">uusi kirja</a>                    
                 </div>
             </div>
 
