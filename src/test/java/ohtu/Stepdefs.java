@@ -1,5 +1,6 @@
 package ohtu;
 
+import com.gargoylesoftware.htmlunit.WebClient;
 import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -27,7 +28,15 @@ public class Stepdefs {
         String absolutePath = file.getAbsolutePath();
         System.setProperty("webdriver.gecko.driver", absolutePath);
 
-        this.driver = new HtmlUnitDriver();
+        this.driver = new HtmlUnitDriver() {
+            @Override
+            protected WebClient getWebClient() {
+                WebClient webclient = super.getWebClient();
+                webclient.getOptions().setCssEnabled(false);    // disable all bootstrap related css errors
+                return webclient;
+            }
+        };
+
     }
 
     @After
