@@ -9,5 +9,5 @@ Scenario: User can edit existing book
 Scenario: User can delete existing book
   Given book "Testikirja" exists in database
   When requesting individual book page with id "1"
-  When button "Poista" is pressed
+  When button with id "deleteButton" is pressed
   Then the page should not list book "Testikirja"

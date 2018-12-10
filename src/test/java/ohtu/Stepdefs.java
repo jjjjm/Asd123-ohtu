@@ -227,6 +227,13 @@ public class Stepdefs {
         assertTrue(driver.getPageSource().contains(blogName));
     }
 
+    @When("^button with id \"([^\"]*)\" is pressed$")
+    public void button_with_id_is_pressed(String id) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id(id));
+        element.click();
+        Thread.sleep(500);
+    }
 
     private void clickLinkWithText(String text) {
         int trials = 0;

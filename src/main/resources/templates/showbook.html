@@ -1,51 +1,98 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <title>Kirja:</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <p></p>
-        <td>
-            <a href="/"> etusivu </a>
-        </td>
-        &nbsp; &nbsp;
-        <td>
-            <a href="/books/new"> uusi kirja </a>
-        </td> 
-        &nbsp; &nbsp;
-        <td>
-            <a href="/books"> kirjavalikko </a>
-        </td> 
-        <br></br>
-        
-        <h2>Kirjan tiedot</h2>
-        <p><span th:text="${book.title}">hello world</span></p>
-        <td>
-            <p>Kirjoittaja: <span th:text="${book.writer}">ll</span></p>
-            <p>ISBN:    <span th:text="${book.isbn}">ll</span></p>
-            <p>Kuvaus:  <span th:text="${book.description}">ll</span></p>
-            <p>Luettu:  <span th:text="${book.isRead ? 'Kyllä' : 'Ei' }">ll</span></p>
-            <p>Päiväys: <span th:text="${book.isRead ? book.dayOfRead : 'N/A'}">ll</span></p>
-        </td>
-        
-        <br></br><br></br>
-        <h3>Muokkaa kirjan tietoja</h3>
-                <form action="#" th:action="@{'/books/' + ${book.id}}" th:object="${book}" method="post">
-                <p>Nimi: <input th:id="title" type="text" th:field="${book.title}" /></p>
-               	<p>Kirjoittaja: <input th:id="author" type="text" th:field="${book.writer}" /></p>
-                <p>ISBN: <input th:id="isbn" type="text" th:field="${book.isbn}" /></p>
-                <p>Kuvaus:</p> <textarea th:id="description" th:field="${book.description}"></textarea>
-                
-                <p><input th:id="submit" type="submit" value="Submit" /></p> 
-       	</form>
-        <br></br>
-        <h3>Poista kirja</h3>
-        <form action="#" th:action="@{'/books/' + ${book.id}} + '/delete'" th:object="${book}" method="delete">
-            <input th:id="submit" type="submit" value="Poista"/>
-        </form>    
-            
 
+        <!-- minified Bootstrap css -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    </head>
+
+    <body>
+
+
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Lukuvinkkikirjasto</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/">Etusivu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/books">Kirjat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/blogs">Blogit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/all">Kaikki vinkit</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page content --> 
+        <div class="container">
+
+            <br/>
+            <h2>Kirjan tiedot</h2>
+
+            <p>Nimi: <span th:text="${book.title}">kirjan nimi</span></p>
+            <p>Kirjoittaja: <span th:text="${book.writer}">kirjan kirjoittaja</span></p>
+            <p>ISBN:    <span th:text="${book.isbn}">kirjan isbn</span></p>
+            <p>Kuvaus:  <span th:text="${book.description}">kirjan kuvaus</span></p>
+            <p>Luettu:  <span th:text="${book.isRead ? 'Kyllä' : 'Ei' }">onko luettu</span></p>
+            <p>Päiväys: <span th:text="${book.isRead ? book.dayOfRead : 'N/A'}">päivä jolloin luettu</span></p>
+
+            <br/>
+            <br/>
+            <h3>Muokkaa kirjan tietoja</h3>
+
+            <form action="#" th:action="@{'/books/' + ${book.id}}" th:object="${book}" method="post">
+                <div class="form-group">
+                    <label for="title">Nimi</label>
+                    <input class="form-control" th:id="title" type="text" th:field="${book.title}" />
+                </div>
+                <div class="form-group">
+                    <label for="author">Kirjailija</label>
+                    <input class="form-control" th:id="author" type="text" th:field="${book.writer}" />
+                </div>
+                <div class="form-group">
+                    <label for="isbn">ISBN</label>
+                    <input class="form-control" th:id="isbn" type="text" th:field="${book.isbn}" />
+                </div>
+                <div class="form-group">
+                    <label for="description">Kuvaus</label>
+                    <textarea class="form-control" th:id="description" th:field="${book.description}"></textarea>
+                </div>
+                <button class="btn btn-primary" th:id="submit" type="submit">Tallenna</button>
+            </form>
+
+            <br/>
+            <br/>
+            <h3>Poista kirja</h3>
+
+            <form action="#" th:action="@{'/books/' + ${book.id}} + '/delete'" th:object="${book}" method="delete">
+                <button class="btn btn-danger" th:id="deleteButton" type="submit" >Poista</button>
+            </form>    
+            
+            <br/>
+            <br/>
+            
+        </div>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="/js/bootstrap.min.js"></script>
     </body>
+
 </html>
