@@ -1,4 +1,3 @@
-
 package ohtu.dao;
 
 import ohtu.handlers.ConnectionHandler;
@@ -10,9 +9,8 @@ import java.util.Date;
 import java.util.List;
 import ohtu.model.Blog;
 
+public class BlogDaoPG implements BlogDao {
 
-public class BlogDaoPG implements BlogDao{
-    
     private final int PRDSTM_INDEX_1 = 1;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_2 = 2;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_3 = 3;   // constant for preparedstatement variable placement
@@ -56,7 +54,23 @@ public class BlogDaoPG implements BlogDao{
 
     @Override
     public List<Blog> searchBlogs(String keyword) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        List<Blog> blogs = new ArrayList<>();
+        // get databse connection
+        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+        Connection connection = conHandler.getDatabaseConnection();
+        // proceed if connection is not null
+        if (connection != null) {
+            // try to get all books from database
+            try {
+                blogs = fetchBlogsByKeyword(connection, keyword);
+            } catch (Exception e) {
+                // operation failed... print error message
+                e.printStackTrace();
+            }
+            // connection has nod been closed yet, so close it now
+            conHandler.closeDatabaseConnection(connection);
+        }
+        return blogs;
     }
 
     @Override
@@ -72,7 +86,7 @@ public class BlogDaoPG implements BlogDao{
             }
             conHandler.closeDatabaseConnection(connection);
         }
-        return blog; 
+        return blog;
     }
 
     @Override
@@ -87,7 +101,7 @@ public class BlogDaoPG implements BlogDao{
                 e.printStackTrace();
             }
             conHandler.closeDatabaseConnection(connection);
-        } 
+        }
     }
 
     @Override
@@ -101,9 +115,9 @@ public class BlogDaoPG implements BlogDao{
                 e.printStackTrace();
             }
             conHandler.closeDatabaseConnection(connection);
-        } 
+        }
     }
-    
+
     private List<Blog> fetchAllBlogs(Connection connection) throws Exception {
         String query = "SELECT * FROM BLOG;";
         PreparedStatement prdstm = connection.prepareStatement(query);
@@ -118,7 +132,7 @@ public class BlogDaoPG implements BlogDao{
         resultSet.close();
         return blogs;
     }
-    
+
     private Blog createBlogFromResultSet(ResultSet resultSet) throws Exception {
         int id = resultSet.getInt("ID");
         String writer = resultSet.getString("WRITER");
@@ -173,5 +187,24 @@ public class BlogDaoPG implements BlogDao{
         PreparedStatement prdstm = connection.prepareStatement(statement);
         prdstm.setInt(PRDSTM_INDEX_1, id);
         prdstm.executeUpdate();
+    }
+
+    /**
+     * Helper method for getting all books in database.
+     */
+    private List<Blog> fetchBlogsByKeyword(Connection connection, String keyword) throws Exception {
+        String query = "SELECT * FROM BLOG WHERE LOWER(TITLE) LIKE ?;";
+        PreparedStatement prdstm = connection.prepareStatement(query);
+        prdstm.setString(PRDSTM_INDEX_1, "%" + keyword.toLowerCase() + "%");
+        ResultSet resultSet = prdstm.executeQuery();
+        List<Blog> blogs = new ArrayList<>();
+        while (resultSet.next()) {
+            Blog blog = createBlogFromResultSet(resultSet);
+            if (blog != null) {
+                blogs.add(blog);
+            }
+        }
+        resultSet.close();
+        return blogs;
     }
 }

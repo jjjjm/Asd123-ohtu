@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import ohtu.handlers.ConnectionHandler;
 import ohtu.model.Blog;
+import ohtu.model.Book;
 import org.h2.tools.RunScript;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class BlogDaoPGTest {
         assertTrue(bdaopg.list() != null);
     }
 
-   /* @Test
+    /* @Test
     public void blogCanBeAddedAndFetchedFromDatabase() {
         int id = 1;
         String title = "TestTitle";
@@ -47,7 +48,6 @@ public class BlogDaoPGTest {
         Blog fetchedBook = bdaopg.getBlog(id);
         assertTrue(fetchedBook.getTitle() == title && fetchedBook.getWriter() == writer);
     }*/
-
     @Test
     public void multipleBlogsCanBeAddedAndFetched() {
         int id1 = 1;
@@ -104,24 +104,20 @@ public class BlogDaoPGTest {
         String title = "TestTitle";
         String writer = "TestWriter";
         bdaopg.add(new Blog(id, title, writer, "", "", false, new Date()));
-        List<Blog> fetchedBlogs = new ArrayList();
-        assertTrue(fetchedBlogs.isEmpty());
+        List<Blog> fetchedBlogs = bdaopg.list();
+        bdaopg.deleteBlog(fetchedBlogs.get(0).getId());
+        assertTrue(bdaopg.list().isEmpty());
     }
 
-    private List<Blog> createBlogs() {
-        int id1 = 1;
-        int id2 = 2;
-        String title1 = "TestTitle";
-        String writer1 = "TestWriter";
-        String title2 = "TestTitle";
-        String writer2 = "TestWriter";
-        List<Blog> blogs = new ArrayList();
-        blogs.add(new Blog(id1, title1, writer1, "", "", false, new Date()));
-        blogs.add(new Blog(id2, title2, writer2, "", "", false, new Date()));
-        return blogs;
-    }
-
-    private void assertFalse(boolean par) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Test
+    public void searchBooksByKeywordWorks() {
+        // lisätään kolme kirjaa kantaan
+        Date today = new Date();
+        bdaopg.add(new Blog(1, "Blogi1", "Blogger1", "123", "Kuvaus", false, today));
+        bdaopg.add(new Blog(1, "Blogi2", "Blogger2", "124", "Kuvaus", false, today));
+        bdaopg.add(new Blog(1, "Blog3", "Blogger3", "125", "Kuvaus", false, today));
+        // haetaan lista kirjoja jotka sisältävät hakusanan "KIRJA" --> 2 kpl
+        List<Blog> blogs = bdaopg.searchBlogs("BLOGI");
+        assertEquals(2, blogs.size());
     }
 }
