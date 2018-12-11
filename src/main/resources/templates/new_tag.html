@@ -17,7 +17,7 @@
         <div>Lisää uusi tägi</div>
         
         <form action="#" th:action="@{/tag/new}" th:object="${tag}" method="post">
-            <p>tag: <input th:id="tag" type="text" th:field="${tag.tag}" /></p> &nbsp;
+            <p>tag: <input th:id="tag" type="text" th:field="${tag.tname}" /></p> &nbsp;
             <p><input th:id="submit" type="submit" value="Submit" /></p> 
        	</form>
 

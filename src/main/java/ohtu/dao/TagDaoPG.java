@@ -50,18 +50,18 @@ public class TagDaoPG implements TagDao {
      */
     @Override
     public List<Tag> list() {
-        List<Tag> books = new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
         ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
         if (connection != null) {
             try {
-                books = fetchAllTags(connection);
+                tags = fetchAllTags(connection);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             conHandler.closeDatabaseConnection(connection);
         }
-        return books;
+        return tags;
     }
     
     @Override
@@ -81,7 +81,7 @@ public class TagDaoPG implements TagDao {
     }
 
     private void addTagToDatabase(Connection connection, Tag tag) throws Exception {
-        String statement = "INSERT INTO TAG (TAG, DATE_CREATED) VALUES (?, ?);";
+        String statement = "INSERT INTO TAG (TNAME, DATE_CREATED) VALUES (?, ?);";
         PreparedStatement prdstm = connection.prepareStatement(statement);
         prdstm.setString(PRDSTM_INDEX_1, tag.getTag());
         Date uDate = new Date();
@@ -107,7 +107,7 @@ public class TagDaoPG implements TagDao {
 
     private Tag createTagFromResultSet(ResultSet resultSet) throws Exception{
         int id = resultSet.getInt("ID");
-        String tag_name = resultSet.getString("TAG");
+        String tag_name = resultSet.getString("TNAME");
         Date created = resultSet.getDate("DATE_CREATED");
         Tag tag = new Tag(id, tag_name, created);
         return tag;
