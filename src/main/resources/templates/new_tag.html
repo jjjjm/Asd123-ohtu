@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Uusi tagi</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        
+        <td>
+            <a href="/"> etusivu </a>
+        </td>
+        &nbsp; &nbsp;
+        <p></p>
+        
+        <div>Lisää uusi tägi</div>
+        
+        <form action="#" th:action="@{/tag/new}" th:object="${tag}" method="post">
+            <p>tag: <input th:id="tag" type="text" th:field="${tag.tag}" /></p> &nbsp;
+            <p><input th:id="submit" type="submit" value="Submit" /></p> 
+       	</form>
+
+    </body>
+</html>
