@@ -100,7 +100,7 @@ public class Stepdefs {
         element.sendKeys("Anonymous");
         element = driver.findElement(By.id("isbn"));
         element.sendKeys("123456789");
-        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element = driver.findElement(By.xpath("//*[@id='submit']"));
         element.click();
     }
 
@@ -195,7 +195,7 @@ public class Stepdefs {
         element.sendKeys(writer);
         element = driver.findElement(By.id("description"));
         element.sendKeys(description);
-        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element = driver.findElement(By.xpath("//*[@id='submit']"));
         element.click();
         Thread.sleep(500);
     }
@@ -208,7 +208,7 @@ public class Stepdefs {
         element.sendKeys(writer);
         element = driver.findElement(By.id("description"));
         element.sendKeys(description);
-        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element = driver.findElement(By.xpath("//*[@id='submit']"));
         element.click();
         Thread.sleep(500);
     }
