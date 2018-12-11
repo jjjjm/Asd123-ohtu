@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/blogs")
 public class BlogController {
     
-    private BlogDao dao;
+    private final BlogDao dao;
     
     @Autowired
     public BlogController(BlogDao blogDao) {
@@ -27,8 +28,13 @@ public class BlogController {
     
     
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model) {
-        List<Blog> blogs = dao.list();
+    public String list(@RequestParam(name="keyword", required=false, defaultValue="") String keyword, Model model) {
+        List<Blog> blogs;
+        if(keyword.isEmpty()){
+            blogs = dao.list();
+        }else {
+            blogs = dao.searchBlogs(keyword);
+        }
         model.addAttribute("blogs", blogs);
         return "blogs";
     }
