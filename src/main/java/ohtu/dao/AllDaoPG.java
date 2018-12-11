@@ -1,50 +1,65 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ohtu.dao;
 
 import java.util.List;
 import ohtu.model.Tip;
-import java.sql.Timestamp;
-
 import java.util.ArrayList;
-import java.util.Date;
 import ohtu.model.Blog;
 import ohtu.model.Book;
-import org.h2.tools.RunScript;
-
 
 public class AllDaoPG implements AllDao {
-    private BookDao bookDao;
-    private BlogDao blogDao;
- 
- 
- 
+
+    private final BookDao bookDao;
+    private final BlogDao blogDao;
+
+    /**
+     * Constructor for AllDaoPG.
+     *
+     * @param bookDao
+     * @param blogDao
+     */
+    public AllDaoPG(BookDao bookDao, BlogDao blogDao) {
+        this.bookDao = bookDao;
+        this.blogDao = blogDao;
+    }
+
     @Override
     public List<Tip> list() {
-        bookDao = new BookDaoPG();
-        blogDao = new BlogDaoPG();
+        // get tips from books
+        List<Tip> tips = getBookTips();
+        //blogs to tips
+        tips.addAll(getBlogTips());
+        // return all
+        return tips;
+    }
+
+    /**
+     * Get tips from books in database.
+     */
+    private List<Tip> getBookTips() {
         List<Tip> tips = new ArrayList<>();
-        // books to tips
-        List<Book> books = bookDao.list();          
-        for (Book book: books){
+        for (Book book : bookDao.list()) {
             Tip tip = new Tip();
             tip.setId(book.getId());
             tip.setType("/books/");
             tip.setText(book.toString());
             tips.add(tip);
         }
-        //blogs to tips
-        List<Blog> blogs = blogDao.list();
-        for (Blog blog: blogs){
+        return tips;
+    }
+
+    /**
+     * Get tips from blogs in database.
+     */
+    private List<Tip> getBlogTips() {
+        List<Tip> tips = new ArrayList<>();
+        for (Blog blog : blogDao.list()) {
             Tip tip = new Tip();
             tip.setId(blog.getId());
             tip.setType("/blogs/");
             tip.setText(blog.toString());
             tips.add(tip);
         }
-        return tips; 
-    }    
+        return tips;
+    }
+
 }
