@@ -244,6 +244,17 @@ public class Stepdefs {
         Thread.sleep(500);
     }
 
+    @When("^user searches blogs by keyword \"([^\"]*)\"$")
+    public void user_searches_blogs_by_keyword(String keyword) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id("searchfield"));
+        element.clear();
+        element.sendKeys(keyword);
+        element = driver.findElement(By.id("search"));
+        element.click();
+        Thread.sleep(500);
+    }
+
     private void clickLinkWithText(String text) {
         int trials = 0;
         while (trials++ < 5) {
