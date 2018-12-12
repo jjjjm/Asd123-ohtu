@@ -5,6 +5,7 @@
  */
 package ohtu.dao;
 
+import java.sql.Connection;
 import java.util.List;
 import ohtu.model.Tag;
 
@@ -21,4 +22,5 @@ public interface TagDao {
     
     public Tag getTag(int id); // return Tag based on id
     
+    public boolean tagAlreadyExistsWithName(String name);    
 }
