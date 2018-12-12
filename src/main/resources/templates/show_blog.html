@@ -48,6 +48,7 @@
             <p>Kuvaus:  <span th:text="${blog.description}">ll</span></p>
             <p>Luettu:  <span th:text="${blog.isRead ? 'Kyllä' : 'Ei' }">ll</span></p>
             <p>Päiväys: <span th:text="${blog.isRead ? blog.dayOfRead : 'N/A'}">ll</span></p>
+            <p>Tägit: <span class="badge badge-info" th:each="tag :${blog.tags}" th:text="${tag}">täg</span></p>
 
             <br/>
             <br/>

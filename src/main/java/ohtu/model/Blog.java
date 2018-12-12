@@ -1,16 +1,19 @@
-
 package ohtu.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Blog {
+
     private int id;
     private String title;
-    private String writer; 
+    private String writer;
     private String url;
     private String description;
     private boolean isRead;
     private Date dayOfRead;
+    private List<Tag> tags;
 
     public Blog(int id, String title, String writer, String url, String description, boolean isRead, Date dayOfRead) {
         this.id = id;
@@ -20,10 +23,11 @@ public class Blog {
         this.description = description;
         this.isRead = isRead;
         this.dayOfRead = dayOfRead;
+        this.tags = new ArrayList();
     }
-    
+
     public Blog() {
-        
+
     }
 
     public int getId() {
@@ -82,9 +86,17 @@ public class Blog {
         this.dayOfRead = dayOfRead;
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public String toString() {
         return title + " by " + writer + ", " + description;
     }
-    
+
 }

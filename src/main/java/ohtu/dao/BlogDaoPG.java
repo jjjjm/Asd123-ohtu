@@ -4,10 +4,12 @@ import ohtu.handlers.ConnectionHandler;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import ohtu.model.Blog;
+import ohtu.model.Tag;
 
 public class BlogDaoPG implements BlogDao {
 
@@ -57,7 +59,7 @@ public class BlogDaoPG implements BlogDao {
         List<Blog> blogs = new ArrayList<>();
         // get databse connection
         Connection connection = conHandler.getDatabaseConnection();
-        // try to get all books from database
+        // try to get all blogs from database
         try {
             blogs = fetchAllBlogs(connection);
         } catch (Exception e) {
@@ -74,7 +76,7 @@ public class BlogDaoPG implements BlogDao {
         List<Blog> blogs = new ArrayList<>();
         // get databse connection
         Connection connection = conHandler.getDatabaseConnection();
-        // try to get all books from database
+        // try to get all blogs from database
         try {
             blogs = fetchBlogsByKeyword(connection, keyword);
         } catch (Exception e) {
@@ -142,6 +144,8 @@ public class BlogDaoPG implements BlogDao {
             Blog blog = createBlogFromResultSet(resultSet);
             if (blog != null) {
                 blogs.add(blog);
+                List<Tag> tags = getTagsForBlog(connection, blog.getId());
+                blog.setTags(tags);
             }
         }
         resultSet.close();
@@ -181,6 +185,8 @@ public class BlogDaoPG implements BlogDao {
         Blog blog = null;
         if (resultSet.next()) {
             blog = createBlogFromResultSet(resultSet);
+            List<Tag> tags = getTagsForBlog(connection, blog.getId());
+            blog.setTags(tags);
         }
         resultSet.close();
         return blog;
@@ -205,7 +211,7 @@ public class BlogDaoPG implements BlogDao {
     }
 
     /**
-     * Helper method for getting all books in database.
+     * Helper method for getting all blogs in database.
      */
     private List<Blog> fetchBlogsByKeyword(Connection connection, String keyword) throws Exception {
         String query = "SELECT * FROM BLOG WHERE LOWER(TITLE) LIKE ?;";
@@ -217,9 +223,87 @@ public class BlogDaoPG implements BlogDao {
             Blog blog = createBlogFromResultSet(resultSet);
             if (blog != null) {
                 blogs.add(blog);
+                List<Tag> tags = getTagsForBlog(connection, blog.getId());
+                blog.setTags(tags);
             }
         }
         resultSet.close();
         return blogs;
     }
+
+    /**
+     * Helper method for deleting tags from blog
+     */
+    private void deleteTagsByBlogId(Connection connection, int blogId) throws Exception {
+        String statement = "DELETE FROM BOOK_TAG WHERE BOOK_ID = ?;";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, blogId);
+        prdstm.executeUpdate();
+    }
+
+    /**
+     * Helper method for geting tags for blog
+     */
+    private List<Tag> getTagsForBlog(Connection connection, int blogId) throws Exception {
+        String statement = "SELECT t.* FROM TAG t, BLOG_TAG bt WHERE bt.BLOG_ID = ? AND bt.TAG_ID = t.ID;";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, blogId);
+        ResultSet resultSet = prdstm.executeQuery();
+        List<Tag> tags = new ArrayList<>();
+        while (resultSet.next()) {
+            Tag tag = createTagFromResultSet(resultSet);
+            tags.add(tag);
+        }
+        resultSet.close();
+        return tags;
+    }
+
+    /**
+     * Helper method for creating tag model from resultSet.
+     */
+    private Tag createTagFromResultSet(ResultSet resultSet) throws Exception {
+        int id = resultSet.getInt("ID");
+        String writer = resultSet.getString("NAME");
+        Timestamp created = resultSet.getTimestamp("DATE_CREATED");
+        return new Tag(id, writer, created);
+    }
+
+    /**
+     * Helper method for creating tag for blog.
+     */
+    private void createTagsForBlogById(Connection connection, List<Tag> tags, int blogId) throws Exception {
+        // loop through all tags and add those to database that dont already exist
+        for (Tag tag : tags) {
+            if (!blogHasTag(connection, blogId, blogId)) {
+                // did not have tag yet --> create i
+                createTagForBlog(connection, tag.getId(), blogId);
+            }
+        }
+    }
+
+    /**
+     * Helper method to check if blog has certain tag.
+     */
+    private boolean blogHasTag(Connection connection, int tagId, int blogId) throws Exception {
+        String statement = "SELECT * FROM BOOK_TAG bt WHERE bt.TAG_ID = ? AND bt.BOOK_ID = ?;";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, tagId);
+        prdstm.setInt(PRDSTM_INDEX_2, blogId);
+        ResultSet resultSet = prdstm.executeQuery();
+        boolean result = resultSet.next();
+        resultSet.close();
+        return result;
+    }
+
+    /**
+     * Helper method for creating tag for blog
+     */
+    private void createTagForBlog(Connection connection, int tagId, int blogId) throws Exception {
+        String statement = "INSERT INTO BOOK_TAG (BOOK_ID, TAG_ID) VALUES (?, ?);";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, tagId);
+        prdstm.setInt(PRDSTM_INDEX_2, blogId);
+        prdstm.execute();
+    }
+
 }
