@@ -24,6 +24,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        conHandler.closeDatabaseConnection(connection);
     }
 
     @After
@@ -38,6 +39,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        conHandler.closeDatabaseConnection(connection);
     }
 
     @Test
@@ -55,7 +57,9 @@ public class DatabaseHandlerTest {
     @Test
     public void initDatabaseWithValidConnectionWorks() {
         ConnectionHandler conHandler = new ConnectionHandler();
-        DatabaseHandler dbHandler = new DatabaseHandler(conHandler.getDatabaseConnection());
+        Connection connection = conHandler.getDatabaseConnection();
+        DatabaseHandler dbHandler = new DatabaseHandler(connection);
         assertTrue(dbHandler.initDatabase());
+        conHandler.closeDatabaseConnection(connection);
     }
 }

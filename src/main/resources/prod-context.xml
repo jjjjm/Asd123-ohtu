@@ -13,7 +13,8 @@
     <bean id="tagDao" class="ohtu.dao.TagDaoPG" />
     
     <bean id="bookController" class="ohtu.controller.BookController">
-        <constructor-arg ref="bookDao"/>
+        <constructor-arg index="0" ref="bookDao" />
+        <constructor-arg index="1" ref="tagDao" />
     </bean>
     
     <bean id="blogController" class="ohtu.controller.BlogController">

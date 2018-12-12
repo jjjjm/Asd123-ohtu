@@ -2,6 +2,7 @@ package ohtu.controller;
 
 import java.util.List;
 import ohtu.dao.BookDao;
+import ohtu.dao.TagDao;
 import ohtu.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BookController {
 
     // interface to database
-    private BookDao bDao;
+    final private BookDao bDao;
+    final private TagDao tDao;
 
     // controller with dependency injection
     @Autowired
-    public BookController(BookDao bookDao) {
+    public BookController(BookDao bookDao, TagDao tagDao) {
         this.bDao = bookDao;
+        this.tDao = tagDao;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -58,7 +61,8 @@ public class BookController {
             return "redirect:/books";
         }
         model.addAttribute("book", book);
-        return "showbook";
+        model.addAttribute("tags", tDao.list());
+        return "show_book";
     }
 
     @PostMapping(value = "/{id}")

@@ -255,6 +255,24 @@ public class Stepdefs {
         Thread.sleep(500);
     }
 
+    @When("^requesting page \"([^\"]*)\"$")
+    public void requesting_page(String page) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.get("http://localhost:" + 8080 + "/" + page);
+        Thread.sleep(500);        
+    }
+
+    @When("^new tag with name \"([^\"]*)\" is inserted$")
+    public void new_tag_with_name_is_inserted(String tagName) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id("name"));
+        element.clear();
+        element.sendKeys(tagName);
+        element = driver.findElement(By.id("submit"));
+        element.click();
+        Thread.sleep(500);
+    }
+
     private void clickLinkWithText(String text) {
         int trials = 0;
         while (trials++ < 5) {
