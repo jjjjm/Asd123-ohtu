@@ -5,7 +5,6 @@
  */
 package ohtu.dao;
 
-import java.sql.Connection;
 import java.util.List;
 import ohtu.model.Tag;
 
