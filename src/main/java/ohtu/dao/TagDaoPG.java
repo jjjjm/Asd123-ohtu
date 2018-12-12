@@ -8,6 +8,7 @@ package ohtu.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,12 +82,12 @@ public class TagDaoPG implements TagDao {
     }
 
     private void addTagToDatabase(Connection connection, Tag tag) throws Exception {
-        String statement = "INSERT INTO TAG (TNAME, DATE_CREATED) VALUES (?, ?);";
+        String statement = "INSERT INTO TAG (NAME, DATE_CREATED) VALUES (?, ?);";
         PreparedStatement prdstm = connection.prepareStatement(statement);
-        prdstm.setString(PRDSTM_INDEX_1, tag.getTag());
+        prdstm.setString(PRDSTM_INDEX_1, tag.getName());
         Date uDate = new Date();
-        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-        prdstm.setDate(PRDSTM_INDEX_2, sDate);
+        Timestamp sDate = new java.sql.Timestamp(uDate.getTime());
+        prdstm.setTimestamp(PRDSTM_INDEX_2, sDate);
         prdstm.execute();
     }
 
@@ -107,8 +108,8 @@ public class TagDaoPG implements TagDao {
 
     private Tag createTagFromResultSet(ResultSet resultSet) throws Exception{
         int id = resultSet.getInt("ID");
-        String tag_name = resultSet.getString("TNAME");
-        Date created = resultSet.getDate("DATE_CREATED");
+        String tag_name = resultSet.getString("NAME");
+        Timestamp created = resultSet.getTimestamp("DATE_CREATED");
         Tag tag = new Tag(id, tag_name, created);
         return tag;
     }  

@@ -5,7 +5,7 @@
  */
 package ohtu.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /** Tag for tagging Books and Blogs with keywords.
  * 
@@ -14,13 +14,13 @@ import java.util.Date;
 public class Tag {
     
     private int id;
-    private String tag;
-    private Date created;
+    private String name;
+    private Timestamp created;
     
-    public Tag(int id, String tag, Date created) {
+    public Tag(int id, String tag, Timestamp created) {
         
         this.id = id;
-        this.tag = tag;
+        this.name = tag;
         this.created = created;
     }
     
@@ -37,24 +37,24 @@ public class Tag {
         this.id = id;
     }
     
-    public String getTag() {
-        return tag;
+    public String getName() {
+        return name;
     }
     
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setName(String tag) {
+        this.name = tag;
     }
     
-    public Date getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
     
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
     
     @Override
     public String toString() {
-        return tag;
+        return name;
     }  
 }
