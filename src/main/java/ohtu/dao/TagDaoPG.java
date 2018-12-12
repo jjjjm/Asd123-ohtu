@@ -20,64 +20,78 @@ import org.springframework.stereotype.Component;
  *
  * @author inkeriv
  */
-
 @Component
 public class TagDaoPG implements TagDao {
-    
+
+    private final ConnectionHandler conHandler;
+
     private final int PRDSTM_INDEX_1 = 1;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_2 = 2;   // constant for preparedstatement variable placement
-    
-    /**Add new tag to database.
-     * 
+
+    /**
+     * Default constructor.
+     */
+    public TagDaoPG() {
+        conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    }
+
+    /**
+     * Constructor which takes TagDaoPG as parameter.
+     *
+     * @param conHandler
+     */
+    public TagDaoPG(ConnectionHandler conHandler) {
+        this.conHandler = conHandler;
+    }
+
+    /**
+     * Add new tag to database.
+     *
      * @param tag
+     * @return true if operation was successfull
      */
     @Override
-    public void add(Tag tag) {
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    public boolean add(Tag tag) {
+        boolean success = false;
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                addTagToDatabase(connection, tag);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        try {
+            addTagToDatabase(connection, tag);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        conHandler.closeDatabaseConnection(connection);
+        return success;
     }
-    
-    /**List all tags in database.
-     * 
+
+    /**
+     * List all tags in database.
+     *
      * @return list of all tags in database
      */
     @Override
     public List<Tag> list() {
         List<Tag> tags = new ArrayList<>();
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                tags = fetchAllTags(connection);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        try {
+            tags = fetchAllTags(connection);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        conHandler.closeDatabaseConnection(connection);
         return tags;
     }
-    
+
     @Override
     public Tag getTag(int id) {
         Tag tag = null;
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                tag = getTagById(connection, id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        try {
+            tag = getTagById(connection, id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        conHandler.closeDatabaseConnection(connection);
         return tag;
     }
     
@@ -123,13 +137,13 @@ public class TagDaoPG implements TagDao {
         return tags;
     }
 
-    private Tag createTagFromResultSet(ResultSet resultSet) throws Exception{
+    private Tag createTagFromResultSet(ResultSet resultSet) throws Exception {
         int id = resultSet.getInt("ID");
         String tag_name = resultSet.getString("NAME");
         Timestamp created = resultSet.getTimestamp("DATE_CREATED");
         Tag tag = new Tag(id, tag_name, created);
         return tag;
-    }  
+    }
 
     public Tag getTagById(Connection connection, int id) throws Exception {
         String query = "SELECT * FROM TAG WHERE ID = ?;";
