@@ -111,8 +111,8 @@ public class BookDaoPGTest {
     public void searchBooksByKeywordWorks() {
         // lisätään kolme kirjaa kantaan
         today = new Date();
-        bdaopg.add(new Book(1, "Testikirja", "Anon", "123", "Kuvaus", false, today));
-        bdaopg.add(new Book(1, "Kirja", "Anon", "124", "Kuvaus", false, today));
+        bdaopg.add(new Book(1, "Testikirja", "Anon", "123", "Kuvaus", true, today));
+        bdaopg.add(new Book(1, "Kirja", "Anon", "124", "Kuvaus", true, today));
         bdaopg.add(new Book(1, "Booker", "Anon", "125", "Kuvaus", true, today));
         // haetaan lista kirjoja jotka sisältävät hakusanan "KIRJA" --> 2 kpl
         List<Book> books = bdaopg.searchBooks("KIRJA");

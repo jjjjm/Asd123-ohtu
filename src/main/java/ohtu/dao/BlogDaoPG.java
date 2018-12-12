@@ -11,44 +11,61 @@ import ohtu.model.Blog;
 
 public class BlogDaoPG implements BlogDao {
 
+    private final ConnectionHandler conHandler;   // database connection handler
+
     private final int PRDSTM_INDEX_1 = 1;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_2 = 2;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_3 = 3;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_4 = 4;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_5 = 5;   // constant for preparedstatement variable placement
 
+    /**
+     * Default constructor.
+     */
+    public BlogDaoPG() {
+        conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    }
+
+    /**
+     * Constructor which takes ConnectionHandler-objects as parameter.
+     *
+     * @param conHandler
+     */
+    public BlogDaoPG(ConnectionHandler conHandler) {
+        this.conHandler = conHandler;
+    }
+
     @Override
-    public void add(Blog blog) {
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    public boolean add(Blog blog) {
+        boolean success = false;
+        // get database connection
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                addBlogToDatabase(connection, blog);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        // try to add blog to database
+        try {
+            addBlogToDatabase(connection, blog);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        // close database connection
+        conHandler.closeDatabaseConnection(connection);
+        return success;
     }
 
     @Override
     public List<Blog> list() {
         List<Blog> blogs = new ArrayList<>();
         // get databse connection
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        // proceed if connection is not null
-        if (connection != null) {
-            // try to get all books from database
-            try {
-                blogs = fetchAllBlogs(connection);
-            } catch (Exception e) {
-                // operation failed... print error message
-                e.printStackTrace();
-            }
-            // connection has nod been closed yet, so close it now
-            conHandler.closeDatabaseConnection(connection);
+        // try to get all books from database
+        try {
+            blogs = fetchAllBlogs(connection);
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has nod been closed yet, so close it now
+        conHandler.closeDatabaseConnection(connection);
         return blogs;
     }
 
@@ -56,66 +73,64 @@ public class BlogDaoPG implements BlogDao {
     public List<Blog> searchBlogs(String keyword) {
         List<Blog> blogs = new ArrayList<>();
         // get databse connection
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        // proceed if connection is not null
-        if (connection != null) {
-            // try to get all books from database
-            try {
-                blogs = fetchBlogsByKeyword(connection, keyword);
-            } catch (Exception e) {
-                // operation failed... print error message
-                e.printStackTrace();
-            }
-            // connection has nod been closed yet, so close it now
-            conHandler.closeDatabaseConnection(connection);
+        // try to get all books from database
+        try {
+            blogs = fetchBlogsByKeyword(connection, keyword);
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has nod been closed yet, so close it now
+        conHandler.closeDatabaseConnection(connection);
         return blogs;
     }
 
     @Override
     public Blog getBlog(int id) {
         Blog blog = null;
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                blog = getBlogById(connection, id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        try {
+            blog = getBlogById(connection, id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        conHandler.closeDatabaseConnection(connection);
         return blog;
     }
 
     @Override
-    public void update(Blog blog) {
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    public boolean update(Blog blog) {
+        boolean success = false;
+        // get databse connection
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                updateBlog(connection, blog);
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        // try to update blog
+        try {
+            updateBlog(connection, blog);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        // close database connection
+        conHandler.closeDatabaseConnection(connection);
+        return success;
     }
 
     @Override
-    public void deleteBlog(int id) {
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    public boolean deleteBlog(int id) {
+        boolean success = false;
+        // get database connection
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                deleteBlogById(connection, id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        // try to delete blog
+        try {
+            deleteBlogById(connection, id);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        // close connection
+        conHandler.closeDatabaseConnection(connection);
+        return success;
     }
 
     private List<Blog> fetchAllBlogs(Connection connection) throws Exception {

@@ -4,7 +4,8 @@ import java.util.List;
 import ohtu.model.Blog;
 
 public interface BlogDao {
-    public void add(Blog blog); // add blog to database
+    
+    public boolean add(Blog blog); // add blog to database
     
     public List<Blog> list();   // return a list of blogs in database
     
@@ -12,8 +13,8 @@ public interface BlogDao {
     
     public Blog getBlog(int id); // search blog by id
     
-    public void update(Blog blog); //updates blog values in database
+    public boolean update(Blog blog); //updates blog values in database
     
-    public void deleteBlog(int id); //deletes blog by id
+    public boolean deleteBlog(int id); //deletes blog by id
     
 }

@@ -14,9 +14,10 @@ public class BlogDaoForTests implements BlogDao {
     }
 
     @Override
-    public void add(Blog blog) {
+    public boolean add(Blog blog) {
         blog.setId(this.blogs.size() + 1);
         this.blogs.add(blog);
+        return true;
     }
 
     @Override
@@ -46,25 +47,28 @@ public class BlogDaoForTests implements BlogDao {
     }
 
     @Override
-    public void update(Blog blog) {
+    public boolean update(Blog blog) {
         for (Blog b : this.blogs) {
             if (blog.getId() == b.getId()) {
                 b.setWriter(blog.getWriter());
                 b.setTitle(blog.getTitle());
                 b.setUrl(blog.getUrl());
                 b.setDescription(blog.getDescription());
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void deleteBlog(int id) {
+    public boolean deleteBlog(int id) {
         for (int i = this.blogs.size() - 1; i >= 0; i--) {
             if (this.blogs.get(i).getId() == id) {
                 this.blogs.remove(i);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
 }

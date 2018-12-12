@@ -2,12 +2,10 @@ package ohtu.dao;
 
 import java.io.FileReader;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import ohtu.handlers.ConnectionHandler;
 import ohtu.model.Blog;
-import ohtu.model.Book;
 import org.h2.tools.RunScript;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -142,4 +140,48 @@ public class BlogDaoPGTest {
         List<Blog> blogs = bdaopg.searchBlogs("BLOGI");
         assertEquals(2, blogs.size());
     }
+
+    @Test
+    public void addBlogkWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BlogDao bdaopg1 = new BlogDaoPG(conHandler);
+        boolean result = bdaopg1.add(new Blog(0, "Blogi", "Kirjoittaja", "blogi.net", "Hieno blogi", true, new Date()));
+        assertFalse(result);
+    }
+
+    @Test
+    public void listBlogsWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BlogDao bdaopg1 = new BlogDaoPG(conHandler);
+        assertEquals(0, bdaopg1.list().size());
+    }
+
+    @Test
+    public void searchBlogsWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BlogDao bdaopg1 = new BlogDaoPG(conHandler);
+        assertEquals(0, bdaopg1.searchBlogs("jotain").size());
+    }
+
+    @Test
+    public void getBlogsWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BlogDao bdaopg1 = new BlogDaoPG(conHandler);
+        assertEquals(null, bdaopg1.getBlog(0));
+    }
+
+    @Test
+    public void updateWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BlogDao bdaopg1 = new BlogDaoPG(conHandler);
+        assertFalse(bdaopg1.update(new Blog(0, "Blogi", "Kirjoittaja", "blogi.net", "Hieno blogi", true, new Date())));
+    }
+
+    @Test
+    public void deleteWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BlogDao bdaopg1 = new BlogDaoPG(conHandler);
+        assertFalse(bdaopg1.deleteBlog(0));
+    }
+
 }
