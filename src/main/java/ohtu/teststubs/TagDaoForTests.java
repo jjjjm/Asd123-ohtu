@@ -15,9 +15,10 @@ public class TagDaoForTests implements TagDao{
     }
     
     @Override
-    public void add(Tag tag) {
+    public boolean add(Tag tag) {
         tag.setId(tags.size() + 1);
         tags.add(tag);
+        return true;
     }
 
     @Override

@@ -15,7 +15,7 @@ import ohtu.model.Tag;
 
 public interface TagDao {
     
-    public void add(Tag tag); // add tag to database
+    public boolean add(Tag tag); // add tag to database
     
     public List<Tag> list();   // return a list of tags in database
     
