@@ -14,6 +14,8 @@ import ohtu.model.Book;
  */
 public class BookDaoPG implements BookDao {
 
+    private final ConnectionHandler conHandler;   // database connection handler
+
     private final int PRDSTM_INDEX_1 = 1;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_2 = 2;   // constant for preparedstatement variable placement
     private final int PRDSTM_INDEX_3 = 3;   // constant for preparedstatement variable placement
@@ -21,27 +23,43 @@ public class BookDaoPG implements BookDao {
     private final int PRDSTM_INDEX_5 = 5;   // constant for preparedstatement variable placement
 
     /**
+     * Default constructor without any parameters.
+     */
+    public BookDaoPG() {
+        conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    }
+
+    /**
+     * Constructor which takes ConnectionHandler-object as parameter.
+     *
+     * @param conHandler
+     */
+    public BookDaoPG(ConnectionHandler conHandler) {
+        this.conHandler = conHandler;
+    }
+
+    /**
      * Add book to database.
      *
      * @param book
+     * @return true if add operation was succesfull
      */
     @Override
-    public void add(Book book) {
+    public boolean add(Book book) {
+        boolean success = false;
         // get database connection
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        // proceed if connection is not null
-        if (connection != null) {
-            // try to add book to database
-            try {
-                addBookToDatabase(connection, book);
-            } catch (Exception e) {
-                // operation failed... print error message
-                e.printStackTrace();
-            }
-            // connection has not been closed yet, so close it now
-            conHandler.closeDatabaseConnection(connection);
+        // try to add book to database
+        try {
+            addBookToDatabase(connection, book);
+            success = true;
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has not been closed yet, so close it now
+        conHandler.closeDatabaseConnection(connection);
+        return success;
     }
 
     /**
@@ -53,20 +71,16 @@ public class BookDaoPG implements BookDao {
     public List<Book> list() {
         List<Book> books = new ArrayList<>();
         // get databse connection
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        // proceed if connection is not null
-        if (connection != null) {
-            // try to get all books from database
-            try {
-                books = fetchAllBooks(connection);
-            } catch (Exception e) {
-                // operation failed... print error message
-                e.printStackTrace();
-            }
-            // connection has nod been closed yet, so close it now
-            conHandler.closeDatabaseConnection(connection);
+        // try to get all books from database
+        try {
+            books = fetchAllBooks(connection);
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has nod been closed yet, so close it now
+        conHandler.closeDatabaseConnection(connection);
         return books;
     }
 
@@ -80,20 +94,16 @@ public class BookDaoPG implements BookDao {
     public List<Book> searchBooks(String keyword) {
         List<Book> books = new ArrayList<>();
         // get databse connection
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        // proceed if connection is not null
-        if (connection != null) {
-            // try to get all books from database
-            try {
-                books = fetchBooksByKeyword(connection, keyword);
-            } catch (Exception e) {
-                // operation failed... print error message
-                e.printStackTrace();
-            }
-            // connection has nod been closed yet, so close it now
-            conHandler.closeDatabaseConnection(connection);
+        // try to get all books from database
+        try {
+            books = fetchBooksByKeyword(connection, keyword);
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has nod been closed yet, so close it now
+        conHandler.closeDatabaseConnection(connection);
         return books;
     }
 
@@ -107,20 +117,16 @@ public class BookDaoPG implements BookDao {
     public Book getBook(int id) {
         Book book = null;
         // get database connection
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        // proceed if connection is not null
-        if (connection != null) {
-            // try to retrieve book from database
-            try {
-                book = getBookById(connection, id);
-            } catch (Exception e) {
-                // operation failed... print error message
-                e.printStackTrace();
-            }
-            // connection has not been closed yet, so close it now
-            conHandler.closeDatabaseConnection(connection);
+        // try to retrieve book from database
+        try {
+            book = getBookById(connection, id);
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has not been closed yet, so close it now
+        conHandler.closeDatabaseConnection(connection);
         return book;
     }
 
@@ -128,43 +134,48 @@ public class BookDaoPG implements BookDao {
      * Update book in database.
      *
      * @param book
+     * @return true if update was succesfull
      */
     @Override
-    public void update(Book book) {
+    public boolean update(Book book) {
+        boolean success = false;
         // get database connection
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
         Connection connection = conHandler.getDatabaseConnection();
-        // proceed if connection is not null
-        if (connection != null) {
-            // try to update the book in database
-            try {
-                updateBook(connection, book);
-            } catch (Exception e) {
-                // operation failed... print error message
-                e.printStackTrace();
-            }
-            // connection has no been closed yet, sol close it now
-            conHandler.closeDatabaseConnection(connection);
+        // try to update the book in database
+        try {
+            updateBook(connection, book);
+            success = true;
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has no been closed yet, sol close it now
+        conHandler.closeDatabaseConnection(connection);
+        return success;
     }
 
     /**
      * Delete the book with given id
      *
      * @param id book id
+     * @return true if delete was succesfull
      */
     @Override
-    public void deleteBook(int id) {
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+    public boolean deleteBook(int id) {
+        boolean success = false;
+        // get database connection
         Connection connection = conHandler.getDatabaseConnection();
-        if (connection != null) {
-            try {
-                deleteBookById(connection, id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
+        // try to delete book in database
+        try {
+            deleteBookById(connection, id);
+            success = true;
+        } catch (Exception e) {
+            // operation failed... print error message
+            e.printStackTrace();
         }
+        // connection has not been closed yet, so close it now
+        conHandler.closeDatabaseConnection(connection);
+        return success;
     }
 
     /**

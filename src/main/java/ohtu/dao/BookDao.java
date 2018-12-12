@@ -6,7 +6,7 @@ import ohtu.model.Book;
 
 public interface BookDao {
     
-    public void add(Book book); // add book to database
+    public boolean add(Book book); // add book to database
     
     public List<Book> list();   // retun list of books in database
     
@@ -14,8 +14,8 @@ public interface BookDao {
     
     public Book getBook(int id); // search book by id
     
-    public void update(Book book); //updates book values in database
+    public boolean update(Book book); //updates book values in database
     
-    public void deleteBook(int id); //deletes book by id
+    public boolean deleteBook(int id); //deletes book by id
     
 }

@@ -15,11 +15,13 @@ public class BookDaoForTests implements BookDao {
     }
     
     @Override
-    public void add(Book book) {
+    public boolean add(Book book) {
         this.reset();
         book.setId(books.size() + 1);
         books.add(book);
+        return true;
     }
+    
     //Quick fix for deletion test, needs more elegant solution maybe
     private void reset() {
         this.books = new ArrayList<>();
@@ -41,7 +43,7 @@ public class BookDaoForTests implements BookDao {
     }
 
     @Override
-    public void update(Book book) {
+    public boolean update(Book book) {
         for(Book b : this.books){
             if(b.getId() == book.getId()){
                 b.setTitle(book.getTitle());
@@ -50,6 +52,7 @@ public class BookDaoForTests implements BookDao {
                 b.setDescription(book.getDescription());
             }
         }
+        return true;
     }
 
     @Override
@@ -64,13 +67,14 @@ public class BookDaoForTests implements BookDao {
     }
     
     @Override
-    public void deleteBook(int id) {
+    public boolean deleteBook(int id) {
         for(int i = books.size() - 1; i >= 0; i--) {
             if(books.get(i).getId() == id) {
                 books.remove(i);
-                return;
+                return true;
             }
         }
+        return false;
     }
     
 }

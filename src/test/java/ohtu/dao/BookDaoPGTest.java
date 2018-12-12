@@ -118,4 +118,12 @@ public class BookDaoPGTest {
         assertEquals(1, books.size());
         assertEquals(titleRemaining, books.get(0).getTitle());
     }
+    
+    @Test
+    public void addBookWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BookDao bdaopg1 = new BookDaoPG(conHandler);
+        boolean result = bdaopg1.add(new Book(1, "Testikirja", "Anon", "123", "Kuvaus", false, today));
+        assertFalse(result);
+    }
 }
