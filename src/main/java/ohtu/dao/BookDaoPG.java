@@ -213,6 +213,8 @@ public class BookDaoPG implements BookDao {
         while (resultSet.next()) {
             Book book = createBookFromResultSet(resultSet);
             if (book != null) {
+                List<Tag> tags = getTagsForBook(connection, book.getId());
+                book.setTags(tags);              
                 books.add(book);
             }
         }
@@ -281,15 +283,30 @@ public class BookDaoPG implements BookDao {
         prdstm.setString(PRDSTM_INDEX_4, book.getDescription());
         prdstm.setInt(PRDSTM_INDEX_5, book.getId());
         prdstm.executeUpdate();
+        // update tags
+        createTagsForBookById(connection, book.getTags(), book.getId());
     }
 
     /**
      * Helper method for deleting a book by its id
      */
     private void deleteBookById(Connection connection, int id) throws Exception {
+        // delete tags from book
+        deleteTagsByBookId(connection, id);
+        // delete book
         String statement = "DELETE FROM BOOK WHERE ID = ?;";
         PreparedStatement prdstm = connection.prepareStatement(statement);
         prdstm.setInt(PRDSTM_INDEX_1, id);
+        prdstm.executeUpdate();
+    }
+    
+    /**
+     * Helper method for deleting tags from book
+     */
+    private void deleteTagsByBookId(Connection connection, int bookId) throws Exception{
+        String statement = "DELETE FROM BOOK_TAG WHERE BOOK_ID = ?;";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, bookId);
         prdstm.executeUpdate();
     }
 
@@ -318,6 +335,44 @@ public class BookDaoPG implements BookDao {
         String writer = resultSet.getString("NAME");
         Timestamp created = resultSet.getTimestamp("DATE_CREATED");
         return new Tag(id, writer, created);
+    }
+    
+    /**
+     * Helper method for creating tag for book.
+     */
+    private void createTagsForBookById(Connection connection, List<Tag> tags, int bookId) throws Exception {
+        // loop through all tags and add those to database that dont already exist
+        for(Tag tag : tags) {
+            if(!bookHasTag(connection, bookId, bookId)) {
+                // did not have tag yet --> create i
+                createTagForBook(connection, tag.getId(), bookId);
+            }
+        }
+    }
+    
+    /**
+     * Helper method to check if book has certain tag.
+     */
+    private boolean bookHasTag(Connection connection, int tagId, int bookId) throws Exception {
+        String statement = "SELECT * FROM BOOK_TAG bt WHERE bt.TAG_ID = ? AND bt.BOOK_ID = ?;";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, tagId);
+        prdstm.setInt(PRDSTM_INDEX_2, bookId);
+        ResultSet resultSet = prdstm.executeQuery();
+        boolean result = resultSet.next();
+        resultSet.close();
+        return result;
+    }
+    
+    /**
+     * Helper method for creating tag for book
+     */
+    private void createTagForBook(Connection connection, int tagId, int bookId) throws Exception {
+        String statement = "INSERT INTO BOOK_TAG (BOOK_ID, TAG_ID) VALUES (?, ?);";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, tagId);
+        prdstm.setInt(PRDSTM_INDEX_2, bookId);
+        prdstm.execute();
     }
 
 }
