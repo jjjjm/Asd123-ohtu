@@ -22,5 +22,5 @@ public interface TagDao {
     
     public Tag getTag(int id); // return Tag based on id
     
-    public boolean tagAlreadyExistsWithName(String name);    
+    public boolean tagAlreadyExistsWithName(String name); //return true if tag with name given in params is already in the database    
 }
