@@ -9,6 +9,7 @@ import ohtu.handlers.ConnectionHandler;
 import ohtu.model.Blog;
 import ohtu.model.Book;
 import org.h2.tools.RunScript;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -34,20 +35,41 @@ public class BlogDaoPGTest {
         }
     }
 
+    @AfterClass
+    public static void tearDownClass() {
+        // after all tests have been done --> fill db with default values
+        try {
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            Connection connection = connectionHandler.getDatabaseConnection();
+            RunScript.execute(connection, new FileReader("sql/database-clear.sql"));
+            RunScript.execute(connection, new FileReader("sql/database-import.sql"));
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void blogListIsNotNull() {
         assertTrue(bdaopg.list() != null);
     }
 
-    /* @Test
+    @Test
     public void blogCanBeAddedAndFetchedFromDatabase() {
         int id = 1;
         String title = "TestTitle";
         String writer = "TestWriter";
         bdaopg.add(new Blog(id, title, writer, "", "", false, new Date()));
-        Blog fetchedBook = bdaopg.getBlog(id);
-        assertTrue(fetchedBook.getTitle() == title && fetchedBook.getWriter() == writer);
-    }*/
+        for (Blog b : bdaopg.list()) {
+            if (b.getTitle().equals(title)) {
+                id = b.getId();
+                break;
+            }
+        }
+        Blog fetchedBlog = bdaopg.getBlog(id);
+        assertTrue(fetchedBlog.getTitle().equals(title) && fetchedBlog.getWriter().equals(writer));
+    }
+
     @Test
     public void multipleBlogsCanBeAddedAndFetched() {
         int id1 = 1;

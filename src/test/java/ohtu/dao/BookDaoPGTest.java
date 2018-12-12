@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import java.util.Date;
 import java.util.List;
 import org.h2.tools.RunScript;
+import org.junit.AfterClass;
 
 public class BookDaoPGTest {
 
@@ -24,6 +25,20 @@ public class BookDaoPGTest {
             ConnectionHandler connectionHandler = new ConnectionHandler();
             Connection connection = connectionHandler.getDatabaseConnection();
             RunScript.execute(connection, new FileReader("sql/database-clear.sql"));
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        // after all tests have been done --> fill db with default values
+        try {
+            ConnectionHandler connectionHandler = new ConnectionHandler();
+            Connection connection = connectionHandler.getDatabaseConnection();
+            RunScript.execute(connection, new FileReader("sql/database-clear.sql"));
+            RunScript.execute(connection, new FileReader("sql/database-import.sql"));
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
