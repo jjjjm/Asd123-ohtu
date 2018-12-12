@@ -98,7 +98,7 @@ public class BookDaoPGTest {
         today = new Date();
         bdaopg.add(new Book(1, "Testikirja", "Anon", "123", "Kuvaus", false, today));
         bdaopg.add(new Book(1, "Kirja", "Anon", "124", "Kuvaus", false, today));
-        bdaopg.add(new Book(1, "Booker", "Anon", "125", "Kuvaus", false, today));
+        bdaopg.add(new Book(1, "Booker", "Anon", "125", "Kuvaus", true, today));
         // haetaan lista kirjoja jotka sisältävät hakusanan "KIRJA" --> 2 kpl
         List<Book> books = bdaopg.searchBooks("KIRJA");
         assertEquals(2, books.size());
@@ -125,5 +125,40 @@ public class BookDaoPGTest {
         BookDao bdaopg1 = new BookDaoPG(conHandler);
         boolean result = bdaopg1.add(new Book(1, "Testikirja", "Anon", "123", "Kuvaus", false, today));
         assertFalse(result);
+    }
+    
+    @Test
+    public void listBooksWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BookDao bdaopg1 = new BookDaoPG(conHandler);
+        assertEquals(0, bdaopg1.list().size());
+    }
+    
+    @Test
+    public void searchBooksWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BookDao bdaopg1 = new BookDaoPG(conHandler);
+        assertEquals(0, bdaopg1.searchBooks("jotain"));
+    }
+    
+    @Test
+    public void getBookWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BookDao bdaopg1 = new BookDaoPG(conHandler);
+        assertEquals(null, bdaopg1.getBook(0));
+    }
+    
+    @Test
+    public void updateWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BookDao bdaopg1 = new BookDaoPG(conHandler);
+        assertFalse(bdaopg1.update(new Book(1, "Kirja", "Kirjoittaja", "123456789", "Kuvaus", true, today)));
+    }
+    
+    @Test
+    public void deleteWithInvalidConnectionWorksAsExpected() {
+        ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
+        BookDao bdaopg1 = new BookDaoPG(conHandler);
+        assertFalse(bdaopg1.deleteBook(0));
     }
 }
