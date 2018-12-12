@@ -33,9 +33,7 @@ public class TagController {
     
     @PostMapping(value = "/new")
     public String addTag(@ModelAttribute Tag tag) {
-        if (!tDao.tagAlreadyExistsWithName(tag.getName())) {
-            tDao.add(tag);
-        }    
+        tDao.add(tag);
         return "new_tag";
     }
 }

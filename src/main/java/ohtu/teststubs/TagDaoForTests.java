@@ -35,11 +35,6 @@ public class TagDaoForTests implements TagDao{
         }
         return null;
     }
-
-    @Override
-    public boolean tagAlreadyExistsWithName(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     
     
     

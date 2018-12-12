@@ -94,23 +94,6 @@ public class TagDaoPG implements TagDao {
         conHandler.closeDatabaseConnection(connection);
         return tag;
     }
-    
-    @Override
-    public boolean tagAlreadyExistsWithName(String name){
-        ConnectionHandler conHandler = new ConnectionHandler(System.getenv("JDBC_DATABASE_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
-        Connection connection = conHandler.getDatabaseConnection();
-        Tag tag = null;
-        if (connection != null) {
-            try {
-                tag = getTagByName(connection, name);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            conHandler.closeDatabaseConnection(connection);
-        }
-        
-        return tag == null;
-    }
 
     private void addTagToDatabase(Connection connection, Tag tag) throws Exception {
         String statement = "INSERT INTO TAG (NAME, DATE_CREATED) VALUES (?, ?);";
@@ -157,19 +140,4 @@ public class TagDaoPG implements TagDao {
         resultSet.close();
         return tag;
     }
-    
-    public Tag getTagByName(Connection connection, String name) throws Exception {
-        String query = "SELECT * FROM TAG WHERE NAME = ?;";
-        PreparedStatement prdstm = connection.prepareStatement(query);
-        prdstm.setString(PRDSTM_INDEX_1, name);
-        ResultSet resultSet = prdstm.executeQuery();
-        Tag tag = null;
-        if (resultSet.next()) {
-            tag = createTagFromResultSet(resultSet);
-        }
-        resultSet.close();
-        return tag;
-    }
-    
-    
 }
