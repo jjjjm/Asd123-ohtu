@@ -100,7 +100,7 @@ public class Stepdefs {
         element.sendKeys("Anonymous");
         element = driver.findElement(By.id("isbn"));
         element.sendKeys("123456789");
-        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element = driver.findElement(By.xpath("//*[@id='submit']"));
         element.click();
     }
 
@@ -195,7 +195,7 @@ public class Stepdefs {
         element.sendKeys(writer);
         element = driver.findElement(By.id("description"));
         element.sendKeys(description);
-        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element = driver.findElement(By.xpath("//*[@id='submit']"));
         element.click();
         Thread.sleep(500);
     }
@@ -208,7 +208,7 @@ public class Stepdefs {
         element.sendKeys(writer);
         element = driver.findElement(By.id("description"));
         element.sendKeys(description);
-        element = driver.findElement(By.xpath("//*[@id='submit'][@value='Submit']"));
+        element = driver.findElement(By.xpath("//*[@id='submit']"));
         element.click();
         Thread.sleep(500);
     }
@@ -240,6 +240,17 @@ public class Stepdefs {
     public void button_with_id_is_pressed(String id) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         WebElement element = driver.findElement(By.id(id));
+        element.click();
+        Thread.sleep(500);
+    }
+
+    @When("^user searches blogs by keyword \"([^\"]*)\"$")
+    public void user_searches_blogs_by_keyword(String keyword) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id("searchfield"));
+        element.clear();
+        element.sendKeys(keyword);
+        element = driver.findElement(By.id("search"));
         element.click();
         Thread.sleep(500);
     }

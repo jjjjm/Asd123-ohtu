@@ -9,5 +9,5 @@ Scenario: User can edit existing blog
 Scenario: User can delete existing blog
   Given blog with title "testblog1", Writer "testwriter" and description "testdesc" exists in database
   When requesting individual blog page with id "1"
-  When button "Poista" is pressed
+  When button with id "deleteButton" is pressed
   Then the page should not list book "testiblog1"

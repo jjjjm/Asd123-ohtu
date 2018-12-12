@@ -1,42 +1,97 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <title>Blogi-vinkit</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- minified Bootstrap css -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     </head>
+
     <body>
-        <p></p>
-        <td>
-            <a href="/"> etusivu </a>
-        </td>
-        &nbsp; &nbsp;
-        <td>
-            <a href="/blogs/new"> uusi blogivinkki </a>
-        </td>
-        &nbsp; &nbsp;
-        <td>
-        </td>
-        
-        <h2>Blogs in database</h2>
-        
-        <!-- print all the values in list -->
-        <ul>
-            <li th:each="blog : ${blogs}">
-                <span th:text="${blog.title}">hello world</span>
-                <p></p>
-            <td>
-                Kirjoittaja: <span th:text="${blog.writer}">kk</span>
-                <p></p>
-                URL: <span th:text="${blog.url}">jj</span>
-                <p></p>
-                Kuvaus: <span th:text="${blog.description}">hh</span>
-                <p></p>
-                <a th:href="@{'/blogs/' + ${blog.id}}">Lisätietoja / muokkaus</a>
-                <p></p>
-            </td>
-            </li>
-        </ul>
-  
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Lukuvinkkikirjasto</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/">Etusivu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/books">Kirjat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/blogs">Blogit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/all">Kaikki vinkit</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+
+        <!-- Page content --> 
+        <div class="container">
+            <br/>
+            <h2>Blogivinkit</h2>
+
+            <div class="row">
+                <div class="col-sm">
+                    <!-- input field for search + button -->
+                    <form action="#" th:action="@{/blogs/}" method="get">
+                        <input th:id="searchfield" type="text" th:name="keyword" th:placeholder="Hakusana..." />
+                        <input th:id="search" type="submit" value="Hae" /> 
+                    </form>
+                </div>
+                <div class="col-sm-auto">
+                    <a href="/blogs/new" class="btn btn-primary">uusi blogi</a>                    
+                </div>
+            </div>
+
+
+            <!-- fill a table with values -->
+            <table class="table table-striped">
+                <tr>
+                    <th>Nimi</th>
+                    <th>Kirjoittaja</th>
+                    <th>URL</th>
+                    <th>Kuvaus</th>
+                    <th></th>
+                </tr>
+                <tr th:each="blog : ${blogs}">
+                    <td>
+                        <span th:text="${blog.title}">title</span>
+                    </td>
+                    <td>
+                        <span th:text="${blog.writer}">writer</span>
+                    </td>
+                    <td>
+                        <span th:text="${blog.url}">url</span>
+                    </td>
+                    <td>
+                        <span th:text="${blog.description}">description</span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/blogs/' + ${blog.id}}">Lisätietoja / muokkaus</a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="/js/bootstrap.min.js"></script>
     </body>
+
 </html>

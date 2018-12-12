@@ -5,28 +5,62 @@
         <title>Uusi kirjavinkki</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- minified Bootstrap css -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     </head>
-    <body>
-        
-        <td>
-            <a href="/"> etusivu </a>
-        </td>
-        &nbsp; &nbsp;
-        <td>
-            <a href="/books/new"> uusi kirja </a>
-        </td>
-        <p></p>
-        
-        <div>Create new book</div>
-        
-        <form action="#" th:action="@{/books/new}" th:object="${book}" method="post">
-                <p>title: <input th:id="title" type="text" th:field="${book.title}" /></p>
-               	<p>author: <input th:id="author" type="text" th:field="${book.writer}" /></p>
-                <p>isbn: <input th:id="isbn" type="text" th:field="${book.isbn}" /></p>
-                <p>description:</p> <textarea th:id="description" th:field="${book.description}"></textarea>
-                
-                <p><input th:id="submit" type="submit" value="Submit" /></p> 
-       	</form>
 
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Lukuvinkkikirjasto</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/">Etusivu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/books">Kirjat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/blogs">Blogit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/all">Kaikki vinkit</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <br/>
+            <h3>Lisää uusi kirjavinkki</h3>
+
+            <form action="#" th:action="@{'/books/new'}" th:object="${book}" method="post">
+                <div class="form-group">
+                    <label for="title">Nimi</label>
+                    <input class="form-control" th:id="title" type="text" th:field="${book.title}" />
+                </div>
+                <div class="form-group">
+                    <label for="author">Kirjailija</label>
+                    <input class="form-control" th:id="author" type="text" th:field="${book.writer}" />
+                </div>
+                <div class="form-group">
+                    <label for="isbn">ISBN</label>
+                    <input class="form-control" th:id="isbn" type="text" th:field="${book.isbn}" />
+                </div>
+                <div class="form-group">
+                    <label for="description">Kuvaus</label>
+                    <textarea class="form-control" th:id="description" th:field="${book.description}"></textarea>
+                </div>
+                <button class="btn btn-primary" th:id="submit" type="submit">Lisää</button>
+            </form>
+        </div>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="/js/bootstrap.min.js"></script>
     </body>
 </html>
