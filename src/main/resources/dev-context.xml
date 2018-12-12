@@ -7,12 +7,22 @@
     
     <bean id="allDao" class="ohtu.teststubs.AllDaoForTests" />
     
+    <bean id="tagDao" class="ohtu.teststubs.TagDaoForTests" />
+    
     <bean id="bookController" class="ohtu.controller.BookController">
         <constructor-arg ref="bookDao"/>
     </bean>
     
+    <bean id="blogController" class="ohtu.controller.BlogController">
+        <constructor-arg ref="blogDao"/>
+    </bean>
+    
     <bean id="allController" class="ohtu.controller.AllController">
         <constructor-arg ref="allDao" />
+    </bean>
+    
+    <bean id="tagController" class="ohtu.controller.TagController">
+        <constructor-arg ref="tagDao"/>
     </bean>
     
 </beans>

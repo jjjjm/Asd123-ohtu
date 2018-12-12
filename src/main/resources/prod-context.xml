@@ -10,13 +10,22 @@
         <constructor-arg index="1" ref="blogDao" />
     </bean>
     
+    <bean id="tagDao" class="ohtu.dao.TagDaoPG" />
+    
     <bean id="bookController" class="ohtu.controller.BookController">
         <constructor-arg ref="bookDao"/>
+    </bean>
+    
+    <bean id="blogController" class="ohtu.controller.BlogController">
+        <constructor-arg ref="blogDao"/>
     </bean>
     
     <bean id="allController" class="ohtu.controller.AllController">
         <constructor-arg ref="allDao"/>
     </bean>
-               
+    
+    <bean id="tagController" class="ohtu.controller.TagController">
+        <constructor-arg ref="tagDao"/>
+    </bean>           
     
 </beans>
