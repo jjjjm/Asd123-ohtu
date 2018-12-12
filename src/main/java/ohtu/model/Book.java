@@ -1,7 +1,9 @@
 
 package ohtu.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Book {
@@ -13,6 +15,7 @@ public class Book {
     private String description;
     private boolean isRead;
     private Date dayOfRead;
+    private List<Tag> tags;
 
     public Book(int id, String title, String writer, String isbn, String description, boolean isRead, Date dayOfRead) {
         this.id = id;
@@ -22,6 +25,7 @@ public class Book {
         this.description = description;
         this.isRead = isRead;
         this.dayOfRead = dayOfRead;
+        tags = new ArrayList<>();
     }
     
     //tyhjä konstruktori, jotta lomakkeen saa nettisivuilla näkyviin. myöhemmin ehkä turha
@@ -96,5 +100,15 @@ public class Book {
     public String toString() {
         return title + " by " + writer + ", " + description;
     }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+    
+    
     
 }

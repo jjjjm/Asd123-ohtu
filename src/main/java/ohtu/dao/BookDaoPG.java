@@ -4,10 +4,12 @@ import ohtu.handlers.ConnectionHandler;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import ohtu.model.Book;
+import ohtu.model.Tag;
 
 /**
  * BookDao implementation for postgreSQL database.
@@ -189,6 +191,9 @@ public class BookDaoPG implements BookDao {
         while (resultSet.next()) {
             Book book = createBookFromResultSet(resultSet);
             if (book != null) {
+                // haetaan kirjaan liittyvät tagit
+                List<Tag> tags = getTagsForBook(connection, book.getId());
+                book.setTags(tags);
                 books.add(book);
             }
         }
@@ -257,6 +262,8 @@ public class BookDaoPG implements BookDao {
         Book book = null;
         if (resultSet.next()) {
             book = createBookFromResultSet(resultSet);
+            List<Tag> tags = getTagsForBook(connection, book.getId());
+            book.setTags(tags);
         }
         resultSet.close();
         return book;
@@ -284,6 +291,33 @@ public class BookDaoPG implements BookDao {
         PreparedStatement prdstm = connection.prepareStatement(statement);
         prdstm.setInt(PRDSTM_INDEX_1, id);
         prdstm.executeUpdate();
+    }
+
+    /**
+     * Helper method for geting tags for book
+     */
+    private List<Tag> getTagsForBook(Connection connection, int bookId) throws Exception {
+        String statement = "SELECT t.* FROM TAG t, BOOK_TAG bt WHERE bt.BOOK_ID = ? AND bt.TAG_ID = t.ID;";
+        PreparedStatement prdstm = connection.prepareStatement(statement);
+        prdstm.setInt(PRDSTM_INDEX_1, bookId);
+        ResultSet resultSet = prdstm.executeQuery();
+        List<Tag> tags = new ArrayList<>();
+        while (resultSet.next()) {
+            Tag tag = createTagFromResultSet(resultSet);
+            tags.add(tag);
+        }
+        resultSet.close();
+        return tags;
+    }
+
+    /**
+     * Helper method for creating tag model from resultSet.
+     */
+    private Tag createTagFromResultSet(ResultSet resultSet) throws Exception {
+        int id = resultSet.getInt("ID");
+        String writer = resultSet.getString("NAME");
+        Timestamp created = resultSet.getTimestamp("DATE_CREATED");
+        return new Tag(id, writer, created);
     }
 
 }

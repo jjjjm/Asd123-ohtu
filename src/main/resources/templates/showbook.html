@@ -53,6 +53,8 @@
             <p>Kuvaus:  <span th:text="${book.description}">kirjan kuvaus</span></p>
             <p>Luettu:  <span th:text="${book.isRead ? 'Kyllä' : 'Ei' }">onko luettu</span></p>
             <p>Päiväys: <span th:text="${book.isRead ? book.dayOfRead : 'N/A'}">päivä jolloin luettu</span></p>
+            <p>Tägit: <span class="badge badge-info" th:each="tag :${book.tags}" th:text="${tag}">täg</span></p>
+
 
             <br/>
             <br/>
@@ -85,10 +87,10 @@
             <form action="#" th:action="@{'/books/' + ${book.id}} + '/delete'" th:object="${book}" method="delete">
                 <button class="btn btn-danger" th:id="deleteButton" type="submit" >Poista</button>
             </form>    
-            
+
             <br/>
             <br/>
-            
+
         </div>
 
         <!-- Compiled and minified JavaScript -->
