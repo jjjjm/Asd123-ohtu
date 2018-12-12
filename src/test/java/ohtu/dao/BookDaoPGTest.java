@@ -138,7 +138,7 @@ public class BookDaoPGTest {
     public void searchBooksWithInvalidConnectionWorksAsExpected() {
         ConnectionHandler conHandler = new ConnectionHandler("NotValidAddress", "admin", "admin");
         BookDao bdaopg1 = new BookDaoPG(conHandler);
-        assertEquals(0, bdaopg1.searchBooks("jotain"));
+        assertEquals(0, bdaopg1.searchBooks("jotain").size());
     }
     
     @Test
