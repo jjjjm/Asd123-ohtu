@@ -49,14 +49,13 @@ public class Stepdefs {
         driver.get("http://localhost:" + 8080 + "/");
         Thread.sleep(1000);
     }
-    
+
 //    @Then("^tip page should have link \"([^\"]*)\" in it")
 //    public void choosing_from_tips(String url) throws Throwable {
 //        WebElement link = driver.findElement(By.linkText(url));
 //        assertEquals(url, link.getAttribute("href"));
 //          
 //    }
-
     @Given("^book \"([^\"]*)\" exists in database$")
     public void book_exists_in_database(String bookname) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -78,13 +77,13 @@ public class Stepdefs {
         assertTrue(driver.findElement(By.tagName("body"))
                 .getText().contains(arg1));
     }
-    
-    @When("^user is at all tips page") 
+
+    @When("^user is at all tips page")
     public void at_all_tips_page() throws Throwable {
-       driver.get("http://localhost:" + 8080 + "/all");
-       Thread.sleep(1000); 
+        driver.get("http://localhost:" + 8080 + "/all");
+        Thread.sleep(1000);
     }
-    
+
     @When("^the \"([^\"]*)\" link is clicked$")
     public void a_link_is_clicked(String linktext) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -162,8 +161,8 @@ public class Stepdefs {
         element.click();
         Thread.sleep(1000);
     }
-    
-     @When("^adding description \"([^\"]*)\"$")
+
+    @When("^adding description \"([^\"]*)\"$")
     public void adding_description(String addedDescription) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         WebElement element = driver.findElement(By.id("description"));
@@ -275,6 +274,23 @@ public class Stepdefs {
         element.clear();
         element.sendKeys(keyword);
         element = driver.findElement(By.id("search"));
+        element.click();
+        Thread.sleep(500);
+    }
+
+    @When("^requesting page \"([^\"]*)\"$")
+    public void requesting_page(String page) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        driver.get("http://localhost:8080/" + page);
+    }
+
+    @When("^new tag with name \"([^\"]*)\" is inserted$")
+    public void new_tag_with_name_is_inserted(String tagName) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id("name"));
+        element.clear();
+        element.sendKeys(tagName);
+        element = driver.findElement(By.id("submit"));
         element.click();
         Thread.sleep(500);
     }
