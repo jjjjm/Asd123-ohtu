@@ -50,12 +50,17 @@ public class Stepdefs {
         Thread.sleep(1000);
     }
 
-//    @Then("^tip page should have link \"([^\"]*)\" in it")
-//    public void choosing_from_tips(String url) throws Throwable {
-//        WebElement link = driver.findElement(By.linkText(url));
-//        assertEquals(url, link.getAttribute("href"));
-//          
-//    }
+    @Then("^the page should have link with text \"([^\"]*)\" in it")
+    public void choosing_from_tips(String linktext) throws Throwable {
+        WebElement link = driver.findElement(By.linkText(linktext));
+        assertTrue(link != null);
+    }
+    
+    @Then("^the page should have link with href \"([^\"]*)\" in it")
+    public void page_contains_link_with_href(String href) throws Throwable {
+        assertTrue(driver.getPageSource().contains("href=\"" + href));
+    }
+
     @Given("^book \"([^\"]*)\" exists in database$")
     public void book_exists_in_database(String bookname) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
