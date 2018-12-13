@@ -50,6 +50,17 @@ public class Stepdefs {
         Thread.sleep(1000);
     }
 
+    @Then("^the page should have link with text \"([^\"]*)\" in it")
+    public void choosing_from_tips(String linktext) throws Throwable {
+        WebElement link = driver.findElement(By.linkText(linktext));
+        assertTrue(link != null);
+    }
+    
+    @Then("^the page should have link with href \"([^\"]*)\" in it")
+    public void page_contains_link_with_href(String href) throws Throwable {
+        assertTrue(driver.getPageSource().contains("href=\"" + href));
+    }
+
     @Given("^book \"([^\"]*)\" exists in database$")
     public void book_exists_in_database(String bookname) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -70,6 +81,12 @@ public class Stepdefs {
     public void is_shown(String arg1) throws Throwable {
         assertTrue(driver.findElement(By.tagName("body"))
                 .getText().contains(arg1));
+    }
+
+    @When("^user is at all tips page")
+    public void at_all_tips_page() throws Throwable {
+        driver.get("http://localhost:" + 8080 + "/all");
+        Thread.sleep(1000);
     }
 
     @When("^the \"([^\"]*)\" link is clicked$")
@@ -145,6 +162,17 @@ public class Stepdefs {
         WebElement element = driver.findElement(By.id("title"));
         element.clear();
         element.sendKeys(newBookTitle);
+        element = driver.findElement(By.id("submit"));
+        element.click();
+        Thread.sleep(1000);
+    }
+
+    @When("^adding description \"([^\"]*)\"$")
+    public void adding_description(String addedDescription) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        WebElement element = driver.findElement(By.id("description"));
+        element.clear();
+        element.sendKeys(addedDescription);
         element = driver.findElement(By.id("submit"));
         element.click();
         Thread.sleep(1000);
@@ -258,8 +286,7 @@ public class Stepdefs {
     @When("^requesting page \"([^\"]*)\"$")
     public void requesting_page(String page) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        driver.get("http://localhost:" + 8080 + "/" + page);
-        Thread.sleep(500);        
+        driver.get("http://localhost:8080/" + page);
     }
 
     @When("^new tag with name \"([^\"]*)\" is inserted$")

@@ -5,7 +5,10 @@
     
     <bean id="blogDao" class="ohtu.teststubs.BlogDaoForTests" />
     
-    <bean id="allDao" class="ohtu.teststubs.AllDaoForTests" />
+    <bean id="allDao" class="ohtu.teststubs.AllDaoForTests">
+        <constructor-arg index="0" ref="bookDao" />
+        <constructor-arg index="1" ref="blogDao" />
+    </bean>
     
     <bean id="tagDao" class="ohtu.teststubs.TagDaoForTests" />
     
