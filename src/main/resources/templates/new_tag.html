@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link js-scroll-trigger" href="/tag/new">Lisää tag</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="/newtag">Uusi tägi</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -41,7 +44,7 @@
             <br/>
             <h3>Lisää uusi tägi</h3>
         
-        <form action="#" th:action="@{/tag/new}" th:object="${tag}" method="post">
+        <form action="#" th:action="@{/newtag}" th:object="${tag}" method="post">
             <div class="form-group">
                 <label for="name">Tag</label>
                 <input class="form-control" th:id="name" type="text" th:field="${tag.name}" />
