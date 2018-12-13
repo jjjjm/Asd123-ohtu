@@ -10,13 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- *
- * @author inkeriv
- */
 
 @Controller
-@RequestMapping("/tag")
+@RequestMapping("/newtag")
 public class TagController {
     
     private TagDao tDao;
@@ -26,12 +22,12 @@ public class TagController {
         this.tDao = tagdao;
     }
     
-    @GetMapping(value = "/new")
-    public String newTagForm(Tag tag) {
+    @GetMapping("")
+    public String redir(Tag tag) {
         return "new_tag";
     }
     
-    @PostMapping(value = "/new")
+    @PostMapping(value = "")
     public String addTag(@ModelAttribute Tag tag) {
         tDao.add(tag);
         return "new_tag";
