@@ -19,6 +19,9 @@ Tehtävän pääpainona on harjoitella [Scrumia](https://www.scrum.org/resources
 
 [Viikon 4 sprint backlog](https://docs.google.com/spreadsheets/d/19UW1VPX9_UCwK7XIggMv1iKhb0BMqjDI0IBkyVOpkDY/edit#gid=1239239064)
 
+## Loppuraportti
+[Loppuraportti](https://docs.google.com/document/d/15f6cxEsK4qrcORUhCMOmsJre2MykkZTPok-nKKnG6zk/edit)
+
 ## Travis
 Sovelluksen jatkuva integrointi Travisissa löytyy [täältä](https://travis-ci.com/jjjjm/Asd123-ohtu).
 
